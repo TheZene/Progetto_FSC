@@ -1,26 +1,25 @@
-#include "Shoal.h"
-#include <iostream>
-Shoal::Shoal(vector<Pesce*> s) {
+#include "School.h"
+School::School(vector<Pesce*> s) {
 	for (int i = 0; i < s.size(); i++)
-		shoal.push_back(s[i]);
+		school.push_back(s[i]);
 	for (int i = 0; i < 3; i++) dir[i] = 0;
 }
 
-void Shoal::setDir(float* arr) {
+void School::setDir(float* arr) {
 	for (int i = 0; i < 3; i++) dir[i] = arr[i];
 }
 
-void Shoal::computeAVGDir() {
+void School::computeAVGDir() {
 	int i = 0;
 	float appArr[] = { 0.0, 0.0, 0.0 };
-	for (i = 0; i < shoal.size(); i++) {
+	float thetaTot = 0.0;
+	for (i = 0; i < school.size(); i++) {
 		for (int j = 0; j < 3; j++) {
-			appArr[j] += shoal[i]->getPos()[j] ;
+			appArr[j] += school[i]->getVel()[j] ;
 		}
 	}
-	for (i = 0; i < shoal.size(); i++) {
-		//TOOD:aggiungi calcoli rivedi sto metodo che stavi già con la testa da un'altra parte
-	}
+	thetaTot = atan2f(appArr[1], appArr[0]) / school.size()* (180 / M_PI);
+	
 	//printf("%f, %f, %f ", appArr[0], appArr[1], appArr[2]);
 }
 

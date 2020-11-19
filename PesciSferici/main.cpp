@@ -3,8 +3,6 @@
 
 #include "form.h"
 #include "frame.h"
-#include "Pesce.h"
-#include "Shoal.h"
 
 
 using namespace std;
