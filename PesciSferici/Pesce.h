@@ -1,8 +1,11 @@
+#define _USE_MATH_DEFINES
 #include "Frame.h"
 #include <stdlib.h>     
 #include <time.h>
 #include <vector>
 #include <stdlib.h>
+#include <math.h>
+
 #pragma once
 //#define L 5
 //#define SFERETTA 7
@@ -28,14 +31,18 @@ private:
 	float pos[DIMARR];
 	float vel[DIMARR];
 	float acc[DIMARR];
+	float theta;
 public:
-	Pesce() {}
+	Pesce();
 	Pesce(float* p, float* v, float* a);
 	void setPos(float* p);
 	void setVel(float* v);
 	void setAcc(float* a);
+	void setTheta(float t);
 	float* getPos() { return pos; }
 	float* getVel() { return vel; }
 	float* getAcc() { return acc; }
+	float getTheta() { return theta; }
 	void Nuota();
+	float computeTheta();
 };

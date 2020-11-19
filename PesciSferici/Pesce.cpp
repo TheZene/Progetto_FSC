@@ -1,5 +1,12 @@
 #include "Pesce.h"
 #include <iostream>
+Pesce::Pesce() {
+    float arr[3] = { 0.0, 0.0, 0.0 };
+    setPos(arr);
+    setVel(arr);
+    setAcc(arr);
+    setTheta(0.0);
+}
 
 Pesce::Pesce(float* p, float* v, float* a) {
     //assuming everything has the same size, as it should be
@@ -22,11 +29,18 @@ void Pesce::setAcc(float* a) {
 		acc[i] = a[i];
 }
 
+
+void Pesce::setTheta(float t) {
+    theta = t;
+}
+
 void Pesce::Nuota() {
-    //always same size
     for (int k = 0; k < DIMARR; ++k){
-        pos[k] += vel[k] * 0.001;
-        printf("%d, %f ", k, pos[k]);
-        //if (abs(Xp_[k]) > (L - 0.5)) Vp_[k] *= -1;  //inversione del moto
+        pos[k] += vel[k]*0.1;
     }
+}
+
+
+float Pesce::computeTheta() {
+    return atan2f(vel[1], vel[0])*(180/M_PI);
 }

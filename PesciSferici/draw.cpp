@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Windows.h>
 #include <FL/gl.h>
 #include <FL/glu.h>
@@ -50,14 +52,24 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
     gluSphere(palla, 1.0, 50, 100);
     glEnable(GL_TEXTURE_2D);
 }*/
-
+//------------------------------------------------------------------------------------------------
+void camFollow(int i) {
+    //glMatrixMode(GL_PROJECTION);
+    glMatrixMode(GL_MODELVIEW);
+    //bisogna fare la traslazione per fare in modo che la camera segua il banco
+    //glTranslatef(1.0, 0.0, 0.0);
+    glRotatef(1*i, 1, 0, 0);
+}
+//------------------------------------------------------
 void draw_pesce() {
+    
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
+        
         float arr0[3][3] = { { 4.0, -4.0, 0.0 },
                              { 0.0, 0.0, 0.0 }, 
                              { -4.0, -4.0, 0.0 } };
-        float arr1[3] = { 0.0, 1.0, 0.0 };
+        float arr1[3] = { 0.0, 0.0, 0.0 };
         float arr2[3] = { 0.0, 0.0, 0.0 };
         Pesce* p1 = new Pesce(arr0[0], arr1, arr2);
         Pesce* p2 = new Pesce(arr0[1], arr1, arr2);
@@ -68,21 +80,37 @@ void draw_pesce() {
         init = true;
     }
     //ottengo il banco di pesci
-    s->getShoal();
+    s->getSchool();
     //qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
     s->computeAVGDir();
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
 
     //qua disegno
-    for (int i = 0; i < s->getShoal().size(); i++) {
+    for (int i = 0; i < s->getSchool().size(); i++) {
         //calcolo lo spostamento dei pesci
-        s->getShoal()[i]->Nuota();
+        s->getSchool()[i]->Nuota();
         glColor3f(1.0f, .0f, 1.0f);     
         glPushMatrix();
         //traslo
-        glTranslated(s->getShoal()[i]->getPos()[0], s->getShoal()[i]->getPos()[1], s->getShoal()[i]->getPos()[2]);
+        glTranslatef(s->getSchool()[i]->getPos()[0], s->getSchool()[i]->getPos()[1], s->getSchool()[i]->getPos()[2]);
         glCallList(SFERA);
         glPopMatrix();
+       
     }
+    
+
+    /*if (lastTheta != s->getSchool()[0]->computeTheta()) {
+        glRotatef(s->getSchool()[0]->computeTheta(), 0, 0, 1);
+        glPushMatrix();
+        lastTheta = s->getSchool()[0]->computeTheta();
+    }*/
+    /*glLoadIdentity();
+    gluLookAt(s->getSchool()[0]->getPos()[0] - 4.0, 9.0, s->getSchool()[0]->getPos()[2] + 24.0,
+        s->getSchool()[0]->getPos()[0] - 4.0, 2.0, s->getSchool()[0]->getPos()[2],
+        0, 1, 0);
+    glRotatef(s->getSchool()[0]->computeTheta(), 1, 1, 1);
+    glPopMatrix();*/
+    printf("\n");
 
 }
 // ********************************************************************************************************
