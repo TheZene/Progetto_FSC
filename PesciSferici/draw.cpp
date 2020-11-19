@@ -3,7 +3,7 @@
 #include <FL/glu.h>
 #include <GL/glut.h>	  
 #include <math.h>
-#include<thread>
+#include <thread>
 
 #include "draw.h"
 #include "Frame.h"

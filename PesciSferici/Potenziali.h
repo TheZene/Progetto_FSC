@@ -71,6 +71,5 @@ float AttractiveForceSchoolX(Shoal, Pesce);  //da finire di overloaddare
 //float AttractivePotenzialSchool(float*, float*);
 
 
-
 #define POTENZIALI 
 #endif

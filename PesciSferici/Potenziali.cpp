@@ -27,7 +27,7 @@ float modul3(float* Anyvect)//calcola il modulo
 float* FindDir(float* Anyvect) // trova theta, phi per le coordinate sferiche, il primo risultato è l'angolo sul piano, il secondo è l'angolo con le zeta
 {								//se siamo in 0,0,0 da {0,0}
 	float a = modul3(Anyvect);
-	float* Directions = new float[2]{0,0};
+	float Directions[2]{ 0,0 };
 	if (a > -0.00001f && a < 0.00001f)
 		return Directions;
 	if (Anyvect[0] >= -0.00001f && Anyvect[1] <= 0.00001f)
@@ -81,7 +81,7 @@ float * RepulsiveForcesFish(float* PosFish1, float * PosFish2) //calcolo delle f
 																//pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	float* Forze = new float[3];
+	float Forze[3];
 	for (int i = 0; i < 3; i++)
 		Forze[i] = ((-12.f) * (PosFish2[i] - PosFish1[i])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 13)));
 	return Forze;
@@ -91,7 +91,7 @@ float * RepulsiveForcesFish(float* PosFish1, float * PosFish2) //calcolo delle f
 float RepulsivePotenzialFish(float* PosFish1, float* PosFish2) //potenziale, primo pesce crea il potenziale, il secondo lo subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return 1.f / (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 12));
+	return 1.f / (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 12)); 
 }
 
 
@@ -103,53 +103,58 @@ float AttractiveForceSchoolX(float* PosSchool,float * VelSchool, float* PosFish,
 {
 	float r = dist(PosSchool, PosFish);
 	float modulV = modul3(VelSchool);
-	float* DirSchool = new float[2];
-	DirSchool = FindDir(VelSchool);
+	float* DirSchool = FindDir(VelSchool);
 	float temporaneo=0;
 	for (int i = 0; i < 3; i++) temporaneo += (PosFish[i] - PosSchool[i]) * VelSchool[i];
 	float theta = acosf(temporaneo / (r * modulV));
 	float ForzaParallela, ForzaPerp;
 	ForzaParallela = 2 * asimettry * (r * cosf(theta)) / (RSchool * RSchool) + (r * sinf(theta) * r * sinf(theta)) / (RSchool * RSchool);
 	ForzaPerp = asimettry * r * cosf(theta) * r * cosf(theta) / (RSchool * RSchool) + 2 * r * sinf(theta) / (RSchool * RSchool);
-	return ForzaParallela * sinf(DirSchool[1]) * cosf(DirSchool[0]) + ForzaPerp * sinf(DirSchool[1]) * cosf(DirSchool[0]);
+	temporaneo= ForzaParallela * sinf(DirSchool[1]) * cosf(DirSchool[0]) + ForzaPerp * sinf(DirSchool[1]) * cosf(DirSchool[0]);
+	delete[] DirSchool;
+	DirSchool = nullptr;
+	return temporaneo;
 }
 
 float AttractiveForceSchoolY(float* PosSchool, float* VelSchool, float* PosFish, float RSchool)
 {
 	float r = dist(PosSchool, PosFish);
 	float modulV = modul3(VelSchool);
-	float* DirSchool = new float[2];
-	DirSchool = FindDir(VelSchool);
+	float* DirSchool = FindDir(VelSchool);
 	float temporaneo = 0;
 	for (int i = 0; i < 3; i++) temporaneo += (PosFish[i] - PosSchool[i]) * VelSchool[i];
 	float theta = acosf(temporaneo / (r * modulV));
 	float ForzaParallela, ForzaPerp;
 	ForzaParallela = 2 * asimettry * (r * cosf(theta)) / (RSchool * RSchool) + (r * sinf(theta) * r * sinf(theta)) / (RSchool * RSchool);
 	ForzaPerp = asimettry * r * cosf(theta) * r * cosf(theta) / (RSchool * RSchool) + 2 * r * sinf(theta) / (RSchool * RSchool);
-	return ForzaParallela * sinf(DirSchool[1]) * sinf(DirSchool[0]) + ForzaPerp * sinf(DirSchool[1]) * sinf(DirSchool[0]);
+	temporaneo = ForzaParallela * sinf(DirSchool[1]) * sinf(DirSchool[0]) + ForzaPerp * sinf(DirSchool[1]) * sinf(DirSchool[0]);
+	delete[] DirSchool;
+	DirSchool = nullptr;
+	return temporaneo;
 }
 float AttractiveForceSchoolZ(float* PosSchool, float* VelSchool, float* PosFish, float RSchool)
 {
 	float r = dist(PosSchool, PosFish);
 	float modulV = modul3(VelSchool);
-	float* DirSchool = new float[2];
-	DirSchool = FindDir(VelSchool);
+	float* DirSchool = FindDir(VelSchool);
 	float temporaneo = 0;
 	for (int i = 0; i < 3; i++) temporaneo += (PosFish[i] - PosSchool[i]) * VelSchool[i];
 	float theta = acosf(temporaneo / (r * modulV));
 	float ForzaParallela, ForzaPerp;
 	ForzaParallela = 2 * asimettry * (r * cosf(theta)) / (RSchool * RSchool) + (r * sinf(theta) * r * sinf(theta)) / (RSchool * RSchool);
 	ForzaPerp = asimettry * r * cosf(theta) * r * cosf(theta) / (RSchool * RSchool) + 2 * r * sinf(theta) / (RSchool * RSchool);
-	return ForzaParallela * cosf(DirSchool[1]) + ForzaPerp * cosf(DirSchool[1]);
+	temporaneo =  ForzaParallela * cosf(DirSchool[1]) + ForzaPerp * cosf(DirSchool[1]);
+	delete[] DirSchool;
+	DirSchool = nullptr;
+	return temporaneo;
 }
 
 float* AttractiveForcesSchool(float* PosSchool, float* VelSchool, float* PosFish, float RSchool) //Forza vettoriale per il potenziale di banco
 {
-	float* Forzexyz = new float[3];
+	float Forzexyz[3];
 	float r = dist(PosSchool, PosFish);
 	float modulV = modul3(VelSchool);
-	float* DirSchool = new float[2];
-	DirSchool = FindDir(VelSchool);
+	float* DirSchool = FindDir(VelSchool);
 	float temporaneo = 0;
 	for (int i = 0; i < 3; i++) temporaneo += (PosFish[i] - PosSchool[i]) * VelSchool[i];
 	float theta = acosf(temporaneo / (r * modulV));
@@ -159,6 +164,8 @@ float* AttractiveForcesSchool(float* PosSchool, float* VelSchool, float* PosFish
 	Forzexyz[0] = ForzaParallela * sinf(DirSchool[1]) * cosf(DirSchool[0]) + ForzaPerp * sinf(DirSchool[1]) * cosf(DirSchool[0]);
 	Forzexyz[1] = ForzaParallela * sinf(DirSchool[1]) * sinf(DirSchool[0]) + ForzaPerp * sinf(DirSchool[1]) * sinf(DirSchool[0]);
 	Forzexyz[2] = ForzaParallela * cosf(DirSchool[1]) + ForzaPerp * cosf(DirSchool[1]);
+	delete[] DirSchool; 
+	DirSchool = nullptr;
 	return Forzexyz;
 }
 
