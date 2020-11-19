@@ -7,7 +7,6 @@
 
 #include "Frame.h"
 #include "Pesce.h"
-#include "Shoal.h"
 
 #include <math.h>
 #include <stdio.h>

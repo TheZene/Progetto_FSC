@@ -9,8 +9,6 @@
 #include <FL/Fl_Multiline_Output.H>
 
 #include "Frame.h"
-#include "Pesce.h"
-#include "Shoal.h"
 
 void exit_callback(Fl_Widget*);
 void ruotaX_callback(Fl_Widget*);
