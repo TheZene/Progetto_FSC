@@ -6,6 +6,7 @@
 #pragma once
 //#define L 5
 //#define SFERETTA 7
+#define DIMARR 3
 
 using namespace std;
 
@@ -24,15 +25,15 @@ using namespace std;
 */
 class Pesce {
 private:
-	float pos[3];
-	float vel[3];
-	float acc[3];
+	float pos[DIMARR];
+	float vel[DIMARR];
+	float acc[DIMARR];
 public:
 	Pesce() {}
-	Pesce(vector<float> p, vector<float> v, vector<float> a);
-	void setPos(vector<float> p);
-	void setVel(vector<float> v);
-	void setAcc(vector<float> a);
+	Pesce(float* p, float* v, float* a);
+	void setPos(float* p);
+	void setVel(float* v);
+	void setAcc(float* a);
 	float* getPos() { return pos; }
 	float* getVel() { return vel; }
 	float* getAcc() { return acc; }

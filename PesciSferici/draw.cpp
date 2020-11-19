@@ -54,9 +54,14 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
 void draw_pesce() {
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
-        Pesce* p1 = new Pesce({ -4.0, -4.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 });
-        Pesce* p2 = new Pesce({ 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 });
-        Pesce* p3 = new Pesce({ 4.0, -4.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 });
+        float arr0[3][3] = { { 4.0, -4.0, 0.0 },
+                             { 0.0, 0.0, 0.0 }, 
+                             { -4.0, -4.0, 0.0 } };
+        float arr1[3] = { 0.0, 1.0, 0.0 };
+        float arr2[3] = { 0.0, 0.0, 0.0 };
+        Pesce* p1 = new Pesce(arr0[0], arr1, arr2);
+        Pesce* p2 = new Pesce(arr0[1], arr1, arr2);
+        Pesce* p3 = new Pesce(arr0[2], arr1, arr2);
         s->addPesce(p1);
         s->addPesce(p2);
         s->addPesce(p3);
