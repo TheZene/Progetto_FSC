@@ -56,7 +56,7 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
 void camFollow(int i) {
     //glMatrixMode(GL_PROJECTION);
     glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
+    //bisogna fare la traslazione per fare in modo che la camera segua il banco
     //glTranslatef(1.0, 0.0, 0.0);
     glRotatef(1*i, 1, 0, 0);
 }
@@ -69,7 +69,7 @@ void draw_pesce() {
         float arr0[3][3] = { { 4.0, -4.0, 0.0 },
                              { 0.0, 0.0, 0.0 }, 
                              { -4.0, -4.0, 0.0 } };
-        float arr1[3] = { 0.4, 0.8, 0.0 };
+        float arr1[3] = { 0.0, 0.0, 0.0 };
         float arr2[3] = { 0.0, 0.0, 0.0 };
         Pesce* p1 = new Pesce(arr0[0], arr1, arr2);
         Pesce* p2 = new Pesce(arr0[1], arr1, arr2);
@@ -79,8 +79,6 @@ void draw_pesce() {
         s->addPesce(p3);
         init = true;
     }
-    camFollow(j);
-    j++;
     //ottengo il banco di pesci
     s->getSchool();
     //qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
