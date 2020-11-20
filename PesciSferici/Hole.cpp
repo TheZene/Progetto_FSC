@@ -6,20 +6,29 @@
 //la seguente costruzione è valida solo se v[2]=0!!!
 
 Hole::Hole(float* p, float* v, int type) {
-    //4 tipi di buche laterali: 1 e 2 dietro, 3 e 4 davanti (destra e sinistra)
-    if (type == 1) MagicAngle = 126 * 3.14159 / 180;
-    else if (type == 2) MagicAngle = -126 * 3.14159 / 180;
-    else if (type == 3) MagicAngle = 54 * 3.14159 / 180;
-    else if (type == 4)  MagicAngle = -54 * 3.14159 / 180;
-    //ruoto il vettore velocità dell'angolazione giusta
-    pos[0] = (cos(MagicAngle) * v[0] + sin(MagicAngle) * v[1]);
-    pos[1] = (-sin(MagicAngle) * v[0] + cos(MagicAngle) * v[1]);
-    pos[2] = 0;
-    //normalizzo il vettore alla distanza e lo sommo al vettore posizione del pesce->vado in buca
-    for (int i = 0; i < 3; i++) pos[i] = (Distance / Module(v)) * pos[i] + p[i];
+    if (v[2] < 0.0000001)
+    {
+        v[2] = 0;
+        //4 tipi di buche laterali: 1 e 2 dietro, 3 e 4 davanti (destra e sinistra)
+        if (type == 1) MagicAngle = 126 * 3.14159 / 180;
+        else if (type == 2) MagicAngle = -126 * 3.14159 / 180;
+        else if (type == 3) MagicAngle = 54 * 3.14159 / 180;
+        else if (type == 4)  MagicAngle = -54 * 3.14159 / 180;
+        //ruoto il vettore velocità dell'angolazione giusta
+        pos[0] = (cos(MagicAngle) * v[0] + sin(MagicAngle) * v[1]);
+        pos[1] = (-sin(MagicAngle) * v[0] + cos(MagicAngle) * v[1]);
+        pos[2] = 0;
+        //normalizzo il vettore alla distanza e lo sommo al vettore posizione del pesce->vado in buca
+        for (int i = 0; i < 3; i++) pos[i] = (Distance / askModule(v)) * pos[i] + p[i];
+    }
+    else
+    {
+        pos[0] = pos[1] = pos[2] = 0;
+        std::cout << "buche off";
+    }
 }
 
-float getModule(float* X) {
+float askModule(float* X) {
     return X[0] * X[0] + X[1] * X[1] + X[2] * X[2];
 }
 

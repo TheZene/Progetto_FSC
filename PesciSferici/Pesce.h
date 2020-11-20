@@ -47,6 +47,6 @@ public:
 	float* getAcc() { return acc; }
 	float getTheta() { return theta; }
 	void Nuota();
-	void NuotainCerchio(float t);
+	void NuotainCerchio(float &t);
 	float computeTheta();
 };

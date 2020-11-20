@@ -2,10 +2,11 @@
 #pragma once
 
 #include<vector>
+#include <iostream>
 
 float askTheta(float* X);
 float askPhi(float* X);
-float getModule(float* X);
+float askModule(float* X);
 
 
 struct Hole {

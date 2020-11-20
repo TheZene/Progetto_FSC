@@ -6,8 +6,7 @@ Pesce::Pesce() {
     setVel(arr);
     setAcc(arr);
     setTheta(0.0);
-    if (vel[2]==0)
-        for (int i = 1; i < 5; i++) holes[i] = Hole(pos, vel, i);
+    for (int i = 0; i < 4; i++) holes[i] = Hole(pos, vel, i+1);
 }
 
 Pesce::Pesce(float* p, float* v, float* a) {
@@ -15,8 +14,7 @@ Pesce::Pesce(float* p, float* v, float* a) {
     setPos(p);
     setVel(v);
     setAcc(a);
-    if (vel[2] == 0)
-        for (int i = 1; i < 5; i++) holes[i] = Hole(pos, vel, i);
+    for (int i = 0; i < 4; i++) holes[i] = Hole(pos, vel, i+1);
 }
 void Pesce::setPos(float* p) {
 	for (int i = 0; i < DIMARR; i++)
@@ -42,7 +40,7 @@ void Pesce::Nuota() {
     for (int k = 0; k < DIMARR; ++k){
         pos[k] += vel[k]*0.1;
     }
-    for (int i = 1; i < 5; i++) holes[i].TraslaBuca(vel);
+    //for (int i = 1; i < 5; i++) holes[i].TraslaBuca(vel);
 }
 
 void Pesce::NuotainCerchio(float &t) {
@@ -60,7 +58,6 @@ void Pesce::NuotainCerchio(float &t) {
     angle[1] = askTheta(vel) - angle[1];
     for (int i = 1; i < 5; i++) holes[i].RuotaBuca(pos, angle);
     t += 0.1;
-
 }
 
 float Pesce::computeTheta() {
