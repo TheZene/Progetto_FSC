@@ -23,6 +23,6 @@ Pesce cerchio (posizione, velocità, accelerazione);
 float t = 0;
 
 /*void draw_palla(void);
-void draw_tetra(void);
+void draw_tetra(void);*/
 void draw_cube(void);
-*/
+
