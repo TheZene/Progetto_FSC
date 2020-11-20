@@ -36,7 +36,7 @@ void Pesce::setTheta(float t) {
 
 void Pesce::Nuota() {
     for (int k = 0; k < DIMARR; ++k){
-        pos[k] += vel[k]*0.002;
+        pos[k] += vel[k]*0.1;
     }
 }
 

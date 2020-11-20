@@ -13,12 +13,14 @@
 #define SFERA 44
 
 class Frame : public Fl_Gl_Window {
-	int  handle(int);
+private:
 	void draw();
 	void init();
+	int handle_mouse(int event, int button, int x, int y);
+	int handle_key(int event, int key);
 public:
 	double ruotaX, ruotaY, ruotaZ, zoom;
-	double theta[2], v[2];
+	int  handle(int);
 	Frame(int x, int y, int w, int h, const char* l = 0) : Fl_Gl_Window(x, y, w, h, l) {}
 };
 
