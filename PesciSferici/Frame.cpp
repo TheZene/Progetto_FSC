@@ -20,14 +20,10 @@
 extern void draw_scene();
 extern void stampa(const char* messaggio);
 char* foo;
+int flag = 0;
 
-void rotate(int deg, int x, int y, int z) {
-    glMatrixMode(GL_MODELVIEW);
-    glRotatef(deg, x, y, z);
-}
-//-----------------------------------------------------------------------------------------------
 void Frame::init(void) {
-    label("Demo Window for CS 559");
+   
     gl_font(FL_HELVETICA_BOLD, 16);
     GLUquadricObj* palla;
     palla = gluNewQuadric();
@@ -84,40 +80,14 @@ void Frame::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     draw_scene();
 
-    /*glPushMatrix();
+/*    glPushMatrix();
     glRotated(ruotaZ, 0, 0, 1); 
     glRotated(ruotaX, 1, 0, 0); 
     glRotated(ruotaY, 0, 1, 0);
     glScalef(zoom, zoom, zoom);
-   
     glPopMatrix();*/
 }
-//-----------------------------------------------------------------------------------------------
-/*int Frame::handle(int evento)
-{
-    int ix, iy;
-    static char  messaggio[50] = { 0 };
-    switch (evento){
-    case FL_MOVE: {
-        ix = Fl::event_x();
-        iy = Fl::event_y();
-        //sprintf_s(messaggio, "  ix=%d iy=%d\n", ix, iy); stampa(messaggio);
-    };
-    /*case FL_SHORTCUT: {
-        if (Fl::event_key() == FL_Up) {
-            camRotateUpX;
-            Fl::unfocus();
-        }
-        return 0;
-    };
-    default: {
-        break;
-    };
-    return 1;
-    
-    }
-    return 0;
-}*/
+
 //-----------------------------------------------------------------------------------------------
 int Frame::handle(int event) {
 
@@ -146,32 +116,42 @@ int Frame::handle(int event) {
 int Frame::handle_mouse(int event, int button, int x, int y) {
     foo = new char[100];
     int ret = 0;
+    int spostamentox;
+    int spostamentoy;
     switch (button) {
     case 1: // LMB
         ret = 1;
         // Based on the action, print the action and
         // coordinates where it occurred.
         if (event == FL_PUSH) {
-            //sprintf(foo, "LMB PUSH ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            //inizializzo le posizioni in cui clicko
+            prevx = x;
+            prevy = y;
         }
         else if (event == FL_DRAG) {
-            //mi sposto lungo le y, ruoto in base a se y < prevy o y > prevy
-            if (prevx == x) 
-            //viceversa 
-            /*else if (prevy == y)
-            else prevx = x;*/
+            //
+            spostamentox = prevx - x;
+            spostamentoy = prevy - y;
+            //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
+            if (!flag) {
+                glPushMatrix();
+                flag = 1;
+            }
+            glRotatef(-spostamentox, 0, 1, 0);
+            glRotatef(-spostamentoy, 1, 0, 0);
 
-
-            //sprintf(foo, "LMB Drag ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            prevx = x;
+            prevy = y;
+            
+            /**/
         }
         else if (event == FL_RELEASE) {
-            //sprintf(foo, "LMB Release ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            glPopMatrix();
+            flag = 0;
+            spostamentox = prevx - x;
+            spostamentoy = prevy - y;
+            glRotatef(-spostamentox, 0, 1, 0);
+            glRotatef(-spostamentoy, 1, 0, 0);
         }
         break;
     case 2: // MMB
@@ -179,19 +159,13 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
         // Based on the action, print the action and
         // coordinates where it occurred.
         if (event == FL_PUSH) {
-            //sprintf(foo, "MMB Push ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            
         }
         else if (event == FL_DRAG) {
-            //sprintf(foo, "MMB Drag ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            
         }
         else if (event == FL_RELEASE) {
-            //sprintf(foo, "MMB Release ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            
         }
         break;
     case 3: // RMB
@@ -199,19 +173,13 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
         // Based on the action, print the action and
         // coordinates where it occurred.
         if (event == FL_PUSH) {
-            //sprintf(foo, "RMB Push ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            
         }
         else if (event == FL_DRAG) {
-            //sprintf(foo, "RMB Drag ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+            
         }
         else if (event == FL_RELEASE) {
-            //sprintf(foo, "RMB Release ( %d , %d )", x, y);
-            //label(foo);
-            damage(1);
+           
         }
         break;
     }
@@ -221,27 +189,27 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
 int Frame::handle_key(int event, int key) {
     switch (key) {
     case 's':  //label("letter c was depressed");
-        rotate(-2, 1, 0, 0);
+        glRotatef(-4, 1, 0, 0);
         damage(1);
         return 1;
     case 'q':  //label("letter c was depressed");
-        rotate(-2, 0, 1, 0);
+        glRotatef(-4, 0, 1, 0);
         damage(1);
         return 1;
     case 'w':  //label("letter c was depressed");
-        rotate(2, 2, 0, 0);
+        glRotatef(4, 2, 0, 0);
         damage(1);
         return 1;
     case 'e':  //label("letter c was depressed");
-        rotate(2, 0, 1, 0);
+        glRotatef(4, 0, 1, 0);
         damage(1);
         return 1;
     case 'd':  //label("letter c was depressed");
-        rotate(2, 0, 0, 1);
+        glRotatef(4, 0, 0, 1);
         damage(1);
         return 1;
     case 'a':  //label("letter c was depressed");
-        rotate(-2, 0, 0, 1);
+        glRotatef(-4, 0, 0, 1);
         damage(1);
         return 1;
     default:  //label("Nothing to do!");
