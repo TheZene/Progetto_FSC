@@ -15,10 +15,10 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
 void draw_scene(void);
 void draw_pesce2(void);
 
-//prova per le buche
-float posizione[3] = { 15,0,0 };
-float velocità[3] = {0, 15, 0 };
-float accelerazione[3] = { 0, 0, 0 };
+//prova per le buche. Per avere moto circolare su piano xy: vy=10, su piano xz vz=10
+float posizione[3] = { 10,10,0 };
+float velocità[3] = {0, 0, 10 };
+float accelerazione[3] = { 0, 0, 0};
 Pesce cerchio (posizione, velocità, accelerazione);
 float t = 0;
 

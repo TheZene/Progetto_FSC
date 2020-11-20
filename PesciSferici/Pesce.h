@@ -34,7 +34,7 @@ private:
 	float pos[DIMARR];
 	float vel[DIMARR];
 	float acc[DIMARR];
-	Hole holes[2];
+	Hole holes[8];
 	float theta;
 public:
 	Pesce();
@@ -48,6 +48,6 @@ public:
 	float* getAcc() { return acc; }
 	float getTheta() { return theta; }
 	void Nuota();
-	void NuotainCerchio(float &t);
+	void NuotainCerchio(float &t, int i);
 	float computeTheta();
 };

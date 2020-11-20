@@ -4,7 +4,7 @@
 #include<vector>
 #include <iostream>
 
-#define dt 0.001
+#define dt 0.01
 #define LateralDistance 4
 #define VerticalDistance 2
 
@@ -16,16 +16,21 @@ float askModule(float* X);
 struct Hole {
 private:
 	float pos[3];
-	//float theta;	//angolo azimut
-	//float phi;	//angolo nel piano xy
-	float MagicAngle;
+	float angle[2];
+	float color[3];
 	float Distance;
+	int type;
+	
 public:
 	float* getPos() { return pos; }
-	void TraslaBuca(float* v);
-	void RuotaBuca(float* p, float *angle);
-	Hole(float* p, float* v, int type);
+	float* getCol() { return color; }
+	void AggiornaBuca(float* p, float* v);
+	Hole(float* p, float* v, int n);
 	Hole() {}
+
+	//Vecchi dinosauri che aspettano il vostro consenso per essere eliminati
+	/*void TraslaBuca(float* v);
+	void RuotaBuca(float* p, float *angle);*/
 };
 
 

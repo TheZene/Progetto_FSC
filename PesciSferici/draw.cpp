@@ -10,25 +10,6 @@
 #include "draw.h"
 #include "Frame.h"
 
-double phi(double x, double y) {
-    return atan2(y, x);
-}
-
-double theta(double x, double y, double z) {
-    double t = atan(sqrt(x * x + y * y) / z);
-    if (z >= 0) return t;
-    else return t + 2 * acos(0.0);
-}
-
-double distance(double x, double y, double z)
-{
-    double dist = 0;
-    double xs[] = { x, y, z };
-    /*for (int i = 0; i < 3; ++i)
-        dist += pow((xs[i] - Xp[i]), 2);*/
-    return sqrt(dist);
-}
-
 //-------------------------------------------------------------------------------------------------
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3)
 {
@@ -113,15 +94,12 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
 }*/
 
 
-
+//pesce con moto circolare
 void draw_pesce2(void) {
-
-    
-    glColor3f(1.0f, .0f, 1.0f);
-    //cerchio.NuotainCerchio(t);
-    cerchio.NuotainCerchio(t);
+    int i = 0;
+    //i=0->ruta su piano xz i=1->ruota su piano xy, altri valori->bohhh
+    cerchio.NuotainCerchio(t, i);
     //grafica del pesce
-    glColor3f(1.0f, .0f, 1.0f);     //perché è stata chiamata due volte?
     glPushMatrix();
     glTranslated(cerchio.getPos()[0], cerchio.getPos()[1], cerchio.getPos()[2]);
     glCallList(SFERA);
