@@ -3,6 +3,13 @@
 #include <math.h>
 using namespace std;
 
+
+
+//##########################
+//Funzioni e attributi generali
+
+
+
 float asimettry = 0.2f; //fattore di asimettria banco
 
 
@@ -24,7 +31,7 @@ float modul3(float* Anyvect)//calcola il modulo
 	return a;
 }
 
-float* FindDir(float* Anyvect) // trova theta, phi per le coordinate sferiche, il primo risultato � l'angolo sul piano, il secondo � l'angolo con le zeta
+float* FindDir(float* Anyvect) // trova theta, phi per le coordinate sferiche, il primo risultato � l'angolo sul piano, il secondo � l'angolo con le zeta
 {								//se siamo in 0,0,0 da {0,0}
 	float a = modul3(Anyvect);
 	float Directions[2]{ 0,0 };
@@ -62,6 +69,11 @@ float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
 		a += (AnyVet1[i] * AnyVet2[i]);
 	return a;
 }
+
+
+
+//##########################################
+//Interazione repulsiva pesce-pesce
 
 float RepulsiveForceFishX(float* PosFish1, float* PosFish2)  //pesce 1 crea il potenziale, pesce 2 le subisce
 {
@@ -104,8 +116,9 @@ float RepulsivePotenzialFish(float* PosFish1, float* PosFish2) //potenziale, pri
 
 
 //####################################
-//si potrebbero fare due funzioni per trovare forza parallela e perp e delle funzioni per proiettare sugli assi
+//Interazioni Attrattive Banco-pesce
 
+//si potrebbero fare due funzioni per trovare forza parallela e perp e delle funzioni per proiettare sugli assi
 
 float AttractiveForceSchoolX(float* PosSchool,float * VelSchool, float* PosFish, float RSchool) //Forza scalare potenziale di banco, guarda il .h
 {
@@ -151,6 +164,39 @@ float AttractivePotenzialSchool(float* PosSchool, float* VelSchool, float* PosFi
 }
 
 
+
+//##############################
+//Interazioni pesce-buca
+
+float AttractiveForceHoleX(float* PosFish, float* PosHole) //interazione scalare pesce buca, primo argomento posizione pesce, secondo posizione buco
+{
+	float r = dist(PosFish, PosHole);
+	return expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[0] - PosHole[0]) / (DIM_BUCA * DIM_BUCA));
+}
+
+float AttractiveForceHoleY(float* PosFish, float* PosHole)
+{
+	float r = dist(PosFish, PosHole);
+	return expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[1] - PosHole[1]) / (DIM_BUCA * DIM_BUCA));
+}
+
+float AttractiveForceHoleZ(float* PosFish, float* PosHole)
+{
+	float r = dist(PosFish, PosHole);
+	return expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[2] - PosHole[2]) / (DIM_BUCA * DIM_BUCA));
+}
+
+float* AttractiveForcesHole(float* PosFish, float* PosHole) //interazione vettoriale pesce buca, primo argomento pos pesce, secondo pos buca
+{
+	float r = dist(PosFish, PosHole);
+	float Forzexyz[3];
+	for (int i = 0; i < 3; i++)
+		Forzexyz[i] = expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[i] - PosHole[i]) / (DIM_BUCA * DIM_BUCA));
+
+	return Forzexyz;
+}
+
+
 //##########################
 //Forze repulsive per pesci (overload)
 
@@ -183,3 +229,130 @@ float RepulsivePotentialFish(Pesce PesceGen, Pesce PesceSub) //il primo pesce ge
 	return RepulsivePotenzialFish(PesceGen.getPos(), PesceSub.getPos());
 }
 
+
+//##########################
+//Forze Attrative per pesci-Banco (overload), da rifare se si introducono attributi nuovi del banco
+
+float AttractiveForceSchoolX(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
+{
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	for (int i = 0; i < 3; i++)
+	{
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			AvgPosSchool[i] += Banco.getSchool()[k]->getPos()[i];
+			AvgVelSchool[i] += Banco.getSchool()[k]->getVel()[i];
+		}
+		AvgPosSchool[i] = AvgPosSchool[i] / float(Banco.getSchool().size());
+		AvgVelSchool[i] = AvgVelSchool[i] / float(Banco.getSchool().size());
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			maxR[i] = maxR[i] > abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]) ? 
+					  maxR[i] : abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]);
+		}
+		r = maxR[i] > r ? maxR[i] : r;
+	}
+
+	return AttractiveForceSchoolX(AvgPosSchool, AvgVelSchool, Fish.getPos(),r);
+}
+
+float AttractiveForceSchoolY(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
+{
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	for (int i = 0; i < 3; i++)
+	{
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			AvgPosSchool[i] += Banco.getSchool()[k]->getPos()[i];
+			AvgVelSchool[i] += Banco.getSchool()[k]->getVel()[i];
+		}
+		AvgPosSchool[i] = AvgPosSchool[i] / float(Banco.getSchool().size());
+		AvgVelSchool[i] = AvgVelSchool[i] / float(Banco.getSchool().size());
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			maxR[i] = maxR[i] > abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]) ?
+				maxR[i] : abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]);
+		}
+		r = maxR[i] > r ? maxR[i] : r;
+	}
+
+	return AttractiveForceSchoolY(AvgPosSchool, AvgVelSchool, Fish.getPos(), r);
+}
+
+float AttractiveForceSchoolZ(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
+{
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	for (int i = 0; i < 3; i++)
+	{
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			AvgPosSchool[i] += Banco.getSchool()[k]->getPos()[i];
+			AvgVelSchool[i] += Banco.getSchool()[k]->getVel()[i];
+		}
+		AvgPosSchool[i] = AvgPosSchool[i] / float(Banco.getSchool().size());
+		AvgVelSchool[i] = AvgVelSchool[i] / float(Banco.getSchool().size());
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			maxR[i] = maxR[i] > abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]) ?
+				maxR[i] : abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]);
+		}
+		r = maxR[i] > r ? maxR[i] : r;
+	}
+
+	return AttractiveForceSchoolZ(AvgPosSchool, AvgVelSchool, Fish.getPos(), r);
+}
+
+
+float* AttractiveForcesSchool(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
+{
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	for (int i = 0; i < 3; i++)
+	{
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			AvgPosSchool[i] += Banco.getSchool()[k]->getPos()[i];
+			AvgVelSchool[i] += Banco.getSchool()[k]->getVel()[i];
+		}
+		AvgPosSchool[i] = AvgPosSchool[i] / float(Banco.getSchool().size());
+		AvgVelSchool[i] = AvgVelSchool[i] / float(Banco.getSchool().size());
+		for (int k = 0; k < Banco.getSchool().size(); k++)
+		{
+			maxR[i] = maxR[i] > abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]) ?
+				maxR[i] : abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]);
+		}
+		r = maxR[i] > r ? maxR[i] : r;
+	}
+
+	return AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r);
+}
+
+//##########################
+//Forze Attrative per pesci-buca (overload pesce-buca)
+
+
+
+//###########################
+//Forze tra pesci complete (pesuedo overload)
+
+//float AllForceFishX(Pesce FishGen, Pesce FishSub)  //il primo pesce è quello che subisce tutte le forze, il secondo è quello che le genera idea di base, da aggiustare
+//{
+//	float temporaneo = RepulsiveForceFishX(FishGen, FishSub);
+//	for (int i = 0; i < 8; i++)
+//		temporaneo += AttractiveForceHoleX(FishSub, FishGen.PosBuca(i));
+//	return temporaneo;
+//}
+
+float AllForceFishY(Pesce FishGen, Pesce FishSub)  
+{
+	return 0;
+}
+
+float AllForceFishZ(Pesce FishGen, Pesce FishSub)  
+{
+	return 0;
+}
+
+float* AllForcesFish(Pesce FishGen, Pesce FishSub)
+{
+	
+}
