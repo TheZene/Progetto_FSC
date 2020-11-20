@@ -59,6 +59,7 @@ void camFollow(int i) {
     //bisogna fare la traslazione per fare in modo che la camera segua il banco
     //glTranslatef(1.0, 0.0, 0.0);
     glRotatef(1*i, 1, 0, 0);
+    glMatrixMode(GL_PROJECTION);
 }
 //------------------------------------------------------
 void draw_pesce() {
@@ -66,17 +67,23 @@ void draw_pesce() {
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
         
-        float arr0[3][3] = { { 4.0, -4.0, 0.0 },
-                             { 0.0, 0.0, 0.0 }, 
-                             { -4.0, -4.0, 0.0 } };
+        float arr0[4][3] = { { 4.0, -4.0, 0.0 },
+                             { 4.0, 0.0, 0.0 }, 
+                             { -4.0, -4.0, 0.0 },
+                             { -4.0, 0.0, 0.0 } };
         float arr1[3] = { 0.0, 0.0, 0.0 };
         float arr2[3] = { 0.0, 0.0, 0.0 };
         Pesce* p1 = new Pesce(arr0[0], arr1, arr2);
         Pesce* p2 = new Pesce(arr0[1], arr1, arr2);
         Pesce* p3 = new Pesce(arr0[2], arr1, arr2);
+        Pesce* p4 = new Pesce(arr0[3], arr1, arr2);
         s->addPesce(p1);
         s->addPesce(p2);
         s->addPesce(p3);
+        s->addPesce(p4);
+        glLoadIdentity();
+        gluLookAt(0.0, 0.0, 60, -2.0, 0.0, 0.0, 0, 1, 0);        // Position - View  - Up Vector
+
         init = true;
     }
     //ottengo il banco di pesci

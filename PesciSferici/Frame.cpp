@@ -72,7 +72,7 @@ void Frame::draw() {
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
         glLoadIdentity();                                      // Reset The View
-        gluLookAt(0, 0, 60, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+        gluLookAt(0.0, 0.0, 60, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -123,8 +123,10 @@ int Frame::handle(int event) {
 
     switch (event) {
     case FL_PUSH:
+        //return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_RELEASE:
     case FL_DRAG:
+        return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_MOVE:
         return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_FOCUS:
@@ -155,6 +157,13 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
             damage(1);
         }
         else if (event == FL_DRAG) {
+            //mi sposto lungo le y, ruoto in base a se y < prevy o y > prevy
+            if (prevx == x) 
+            //viceversa 
+            /*else if (prevy == y)
+            else prevx = x;*/
+
+
             //sprintf(foo, "LMB Drag ( %d , %d )", x, y);
             //label(foo);
             damage(1);
@@ -211,27 +220,27 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
 
 int Frame::handle_key(int event, int key) {
     switch (key) {
-    case 'w':  //label("letter c was depressed");
+    case 's':  //label("letter c was depressed");
         rotate(-2, 1, 0, 0);
         damage(1);
         return 1;
-    case 'a':  //label("letter c was depressed");
+    case 'q':  //label("letter c was depressed");
         rotate(-2, 0, 1, 0);
         damage(1);
         return 1;
-    case 's':  //label("letter c was depressed");
-        rotate(2, 1, 0, 0);
-        damage(1);
-        return 1;
-    case 'd':  //label("letter c was depressed");
-        rotate(2, 0, 1, 0);
+    case 'w':  //label("letter c was depressed");
+        rotate(2, 2, 0, 0);
         damage(1);
         return 1;
     case 'e':  //label("letter c was depressed");
+        rotate(2, 0, 1, 0);
+        damage(1);
+        return 1;
+    case 'd':  //label("letter c was depressed");
         rotate(2, 0, 0, 1);
         damage(1);
         return 1;
-    case 'q':  //label("letter c was depressed");
+    case 'a':  //label("letter c was depressed");
         rotate(-2, 0, 0, 1);
         damage(1);
         return 1;
