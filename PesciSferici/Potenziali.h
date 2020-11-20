@@ -13,7 +13,7 @@
 #include <math.h>
 #include <iostream>
 #include "Pesce.h"
-#include "Shoal.h"
+#include "School.h"
 #define LUNGHEZZA_PESCE 2
 
 
@@ -21,6 +21,7 @@
 float dist(float*, float*); //calcolo distanza tra due pesci
 float modul3(float*); //modulo 3 d
 float* FindDir(float*); //trova angoli delle coordinate sferiche
+float ProdottoScalare3(float*, float*);//prodotto scalare 3d
 
 //==========================================
 //Forze e potenziali con posizioni
@@ -62,7 +63,7 @@ float RepulsivePotenzialFish(Pesce, Pesce);
 //float RepulsivePotenzialFish(Pesce*, Pesce*); 
 
 
-float AttractiveForceSchoolX(Shoal, Pesce);  //da finire di overloaddare
+float AttractiveForceSchoolX(School, Pesce);  //da finire di overloaddare
 //float AttractiveForceSchoolY(float*, float*); 
 //float AttractiveForceSchoolZ(float*, float*);
 
