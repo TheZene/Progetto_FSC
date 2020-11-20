@@ -53,15 +53,15 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
     glEnable(GL_TEXTURE_2D);
 }*/
 //------------------------------------------------------------------------------------------------
-void camFollow(int i) {
+/*void camFollow(int i) {
     //glMatrixMode(GL_PROJECTION);
     glMatrixMode(GL_MODELVIEW);
     //bisogna fare la traslazione per fare in modo che la camera segua il banco
     //glTranslatef(1.0, 0.0, 0.0);
     glRotatef(1*i, 1, 0, 0);
-}
+}*/
 //------------------------------------------------------
-void draw_pesce() {
+/*void draw_pesce() {
     
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
@@ -69,7 +69,7 @@ void draw_pesce() {
         float arr0[3][3] = { { 4.0, -4.0, 0.0 },
                              { 0.0, 0.0, 0.0 }, 
                              { -4.0, -4.0, 0.0 } };
-        float arr1[3] = { 0.0, 0.0, 0.0 };
+        float arr1[3] = { 1.0, 0.0, 0.0 };
         float arr2[3] = { 0.0, 0.0, 0.0 };
         Pesce* p1 = new Pesce(arr0[0], arr1, arr2);
         Pesce* p2 = new Pesce(arr0[1], arr1, arr2);
@@ -94,9 +94,7 @@ void draw_pesce() {
         //traslo
         glTranslatef(s->getSchool()[i]->getPos()[0], s->getSchool()[i]->getPos()[1], s->getSchool()[i]->getPos()[2]);
         glCallList(SFERA);
-        glPopMatrix();
-       
-    }
+        glPopMatrix();}*/
     
 
     /*if (lastTheta != s->getSchool()[0]->computeTheta()) {
@@ -109,14 +107,30 @@ void draw_pesce() {
         s->getSchool()[0]->getPos()[0] - 4.0, 2.0, s->getSchool()[0]->getPos()[2],
         0, 1, 0);
     glRotatef(s->getSchool()[0]->computeTheta(), 1, 1, 1);
-    glPopMatrix();*/
+    glPopMatrix();
     printf("\n");
 
+}*/
+
+
+
+void draw_pesce2(void) {
+
+    
+    glColor3f(1.0f, .0f, 1.0f);
+    //cerchio.NuotainCerchio(t);
+    cerchio.NuotainCerchio(t);
+    //grafica del pesce
+    glColor3f(1.0f, .0f, 1.0f);     //perché è stata chiamata due volte?
+    glPushMatrix();
+    glTranslated(cerchio.getPos()[0], cerchio.getPos()[1], cerchio.getPos()[2]);
+    glCallList(SFERA);
+    glPopMatrix();
 }
 // ********************************************************************************************************
 void draw_scene(void) {
 
-    draw_pesce();
+    draw_pesce2();
 
     glColor3f(0.1, 1.0, 0.1);		// redish
     //glFrontFace(GL_CW); 

@@ -13,6 +13,7 @@
 //#define SFERETTA 7
 #define DIMARR 3
 
+
 using namespace std;
 
 /*Class: Pesce, descrive un pesce
@@ -33,7 +34,7 @@ private:
 	float pos[DIMARR];
 	float vel[DIMARR];
 	float acc[DIMARR];
-	Hole holes[4];
+	Hole holes[2];
 	float theta;
 public:
 	Pesce();

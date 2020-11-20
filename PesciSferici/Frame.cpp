@@ -38,6 +38,16 @@ void Frame::init(void) {
     gluSphere(palla, 0.5, 30, 30);
     glEndList();
 
+    //per disegnare le buche (giusto per vedere se sono nelle posizioni giuste)
+    GLUquadricObj* buca;
+    buca = gluNewQuadric();
+    gluQuadricDrawStyle(buca, GLU_FILL);
+    gluQuadricNormals(buca, GLU_FLAT);
+
+    glNewList(BUCA, GL_COMPILE);
+    gluSphere(buca, 0.1, 30, 30);
+    glEndList();
+
 }
 //-----------------------------------------------------------------------------------------------
 

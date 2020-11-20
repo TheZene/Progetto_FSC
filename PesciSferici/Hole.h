@@ -4,6 +4,10 @@
 #include<vector>
 #include <iostream>
 
+#define dt 0.001
+#define LateralDistance 4
+#define VerticalDistance 2
+
 float askTheta(float* X);
 float askPhi(float* X);
 float askModule(float* X);
@@ -15,7 +19,7 @@ private:
 	//float theta;	//angolo azimut
 	//float phi;	//angolo nel piano xy
 	float MagicAngle;
-	float Distance=3;
+	float Distance;
 public:
 	float* getPos() { return pos; }
 	void TraslaBuca(float* v);
