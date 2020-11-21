@@ -3,14 +3,13 @@
 #include <math.h>
 using namespace std;
 
-
+float asimmetry=0.2f; //fattore di asimettria banco
 
 //##########################
 //Funzioni e attributi generali
 
 
 
-float asimettry = 0.2f; //fattore di asimettria banco
 
 
 float dist(float * pos1, float * pos2) //calcolo della distanza tra due punti FUNZIONA 
@@ -78,7 +77,7 @@ float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
 float RepulsiveForceFishX(float* PosFish1, float* PosFish2)  //pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return ((12.f) * (PosFish2[0] - PosFish1[0])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale, 13)));
+	return ((3.f) * (PosFish2[0] - PosFish1[0])) / (r * (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale), 4)));
 }
 
 
@@ -86,14 +85,14 @@ float RepulsiveForceFishX(float* PosFish1, float* PosFish2)  //pesce 1 crea il p
 float RepulsiveForceFishY(float* PosFish1, float* PosFish2) //pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return ((12.f) * (PosFish2[1] - PosFish1[1])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale, 13)));
+	return ((3.f) * (PosFish2[1] - PosFish1[1])) / (r * (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale) , 4)));
 }
 
 
 float RepulsiveForceFishZ(float* PosFish1, float* PosFish2) //pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return ((12.f) * (PosFish2[2] - PosFish1[2])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale, 13)));
+	return ((3.f) * (PosFish2[2] - PosFish1[2])) / (r * (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale) , 4)));
 }
 
 
@@ -103,15 +102,14 @@ float * RepulsiveForcesFish(float* PosFish1, float * PosFish2) //calcolo delle f
 	float r = dist(PosFish1, PosFish2);
 	float Forze[3];
 	for (int i = 0; i < 3; i++)
-		Forze[i] = ((12.f) * (PosFish2[i] - PosFish1[i])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 13)));
+		Forze[i] = ((3.f) * (PosFish2[i] - PosFish1[i])) / (r * (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale) , 4)));
 	return Forze;
-
 }
 
 float RepulsivePotenzialFish(float* PosFish1, float* PosFish2) //potenziale, primo pesce crea il potenziale, il secondo lo subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return 1.f / (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 12)); 
+	return 1.f / (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale) , 3));
 }
 
 
@@ -125,7 +123,7 @@ float AttractiveForceSchoolX(float* PosSchool,float * VelSchool, float* PosFish,
 	float modulV = modul3(VelSchool);
 	float velposS = ProdottoScalare3(PosSchool, VelSchool);
 	float velposF = ProdottoScalare3(PosFish, VelSchool);
-	return (1 - asimettry) * 2 * VelSchool[0] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV) 
+	return (1 - asimmetry) * 2 * VelSchool[0] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV) 
 			+ 2 * (PosSchool[0] - PosFish[0]) / (RSchool * RSchool);
 }
 
@@ -134,7 +132,7 @@ float AttractiveForceSchoolY(float* PosSchool, float* VelSchool, float* PosFish,
 	float modulV = modul3(VelSchool);
 	float velposS = ProdottoScalare3(PosSchool, VelSchool);
 	float velposF = ProdottoScalare3(PosFish, VelSchool);
-	return (1 - asimettry) * 2 * VelSchool[1] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV)
+	return (1 - asimmetry) * 2 * VelSchool[1] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV)
 		+ 2 * (PosSchool[1] - PosFish[1]) / (RSchool * RSchool);
 }
 float AttractiveForceSchoolZ(float* PosSchool, float* VelSchool, float* PosFish, float RSchool)
@@ -142,7 +140,7 @@ float AttractiveForceSchoolZ(float* PosSchool, float* VelSchool, float* PosFish,
 	float modulV = modul3(VelSchool);
 	float velposS = ProdottoScalare3(PosSchool, VelSchool);
 	float velposF = ProdottoScalare3(PosFish, VelSchool);
-	return (1 - asimettry) * 2 * VelSchool[2] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV)
+	return (1 - asimmetry) * 2 * VelSchool[2] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV)
 		+ 2 * (PosSchool[2] - PosFish[2]) / (RSchool * RSchool);
 }
 
@@ -153,7 +151,7 @@ float* AttractiveForcesSchool(float* PosSchool, float* VelSchool, float* PosFish
 	float velposS = ProdottoScalare3(PosSchool, VelSchool);
 	float velposF = ProdottoScalare3(PosFish, VelSchool);
 	for (int i = 0; i < 3; i++)
-		Forzexyz[i] = (1 - asimettry) * 2 * VelSchool[i] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV)
+		Forzexyz[i] = (1 - asimmetry) * 2 * VelSchool[i] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV)
 					+ 2 * (PosSchool[i] - PosFish[i]) / (RSchool * RSchool);
 	return Forzexyz;
 }
@@ -308,6 +306,7 @@ float* AttractiveForcesSchool(School Banco, Pesce Fish) //calcola la media della
 	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
 	for (int i = 0; i < 3; i++)
 	{
+		//calcola pos e vel media del banco (questa parte è da spostare tra le funzioni del banco)
 		for (int k = 0; k < Banco.getSchool().size(); k++)
 		{
 			AvgPosSchool[i] += Banco.getSchool()[k]->getPos()[i];
@@ -315,6 +314,7 @@ float* AttractiveForcesSchool(School Banco, Pesce Fish) //calcola la media della
 		}
 		AvgPosSchool[i] = AvgPosSchool[i] / float(Banco.getSchool().size());
 		AvgVelSchool[i] = AvgVelSchool[i] / float(Banco.getSchool().size());
+		//trova la distanza massima lungo un asse dal centro
 		for (int k = 0; k < Banco.getSchool().size(); k++)
 		{
 			maxR[i] = maxR[i] > abs(Banco.getSchool()[k]->getPos()[i] - AvgPosSchool[i]) ?
@@ -354,5 +354,75 @@ float AllForceFishZ(Pesce FishGen, Pesce FishSub)
 
 float* AllForcesFish(Pesce FishGen, Pesce FishSub)
 {
-	
+	return 0;
+}
+
+int Weight(vector<School>& Oceano)
+{
+	int peso = 0;
+	for (int a = 0; a < Oceano.size(); a++)
+		peso += Oceano[a].getSchool().size();
+	return peso;
+
+}
+
+void SetAccelerazioni(vector<School> &Oceano)
+{
+	int pesoTot = Weight(Oceano);
+	int pesoBanco;
+	for (int a=0; a < Oceano.size(); a++)
+		for (int b=0; b < Oceano[a].getSchool().size(); b++)
+		{
+			Pesce* Fish = Oceano[a].getSchool()[b];
+			float accTot[3] = { 0.f, 0.f, 0.f };
+			float* forza;
+			vector<int> PerceivedSchools;
+
+			//trova i banchi visti dal pesce
+			for (int i=0; i < Oceano.size(); i++)
+				for (int k=0; k < Oceano[i].getSchool().size(); k++)
+					if (a != i || b != k)
+						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < MinDist) //da aggiungere campo visivo (così sono pesci cieci, solo sensori)
+						{
+							PerceivedSchools.push_back(i);
+							k = Oceano[i].getSchool().size();
+						}
+				
+			//consideriamo tutti i banchi in vista, uno alla volta
+			for (int i=0; i < PerceivedSchools.size(); i++)
+			{
+				pesoBanco = Oceano[PerceivedSchools[i]].getSchool().size();
+				//potenziali banchi
+				forza = AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish);
+				for (int u = 0; u < 3; u++)
+					accTot[u] += (forza[u] / massa)*pesoBanco/pesoTot;
+
+				cout << "accTotx= " <<Fish->getVel()[0]<<endl;
+				cout << "Vtotx= " << Fish->getVel()[0] << endl;
+				
+				//consideriamo i potenziali repulsivi dei pesci vicini del banco corrente
+				for (int j=0; j < Oceano[PerceivedSchools[i]].getSchool().size(); j++)
+					if (a != PerceivedSchools[i] || b != j)
+						if (dist(Fish->getPos(), Oceano[PerceivedSchools[i]].getSchool()[j]->getPos()) < MinDist) //sente solo le repulsioni dei pesci vicini, per risparmiare conti
+						{
+							forza = RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish);
+							for (int u = 0; u < 3; u++)
+								accTot[u] += forza[u] / massa;
+
+
+							//potenziali buche
+							for (int h = 0; h < 8; h++)
+							{
+								float* PosHole = Oceano[PerceivedSchools[i]].getSchool()[j]->getHoles()[h].getPos();
+								forza = AttractiveForcesHole(Fish->getPos(), PosHole);
+								for (int u = 0; u < 3; u++)
+									accTot[u] += forza[u] / massa;
+							}
+							
+						}
+					
+			}
+				
+			Fish->setAcc(accTot);
+		}
 }

@@ -3,10 +3,8 @@
 
 #include<vector>
 #include <iostream>
+#include "define.h"
 
-#define dt 0.01
-#define LateralDistance 4
-#define VerticalDistance 2
 
 float askTheta(float* X);
 float askPhi(float* X);
@@ -20,10 +18,12 @@ private:
 	float color[3];
 	float Distance;
 	int type;
+	float force;
 	
 public:
 	float* getPos() { return pos; }
 	float* getCol() { return color; }
+	float getForce() { return force; }
 	void AggiornaBuca(float* p, float* v);
 	Hole(float* p, float* v, int n);
 	Hole() {}

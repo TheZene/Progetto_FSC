@@ -6,8 +6,7 @@
 #include <math.h>
 #include "Pesce.h"
 
-//#define L 5
-//#define SFERETTA 7
+
 
 /*Class: School
 * Description: classe che descrive un banco di pesci
@@ -36,5 +35,13 @@ public:
 	void addPesce(Pesce* p) { school.push_back(p); }
 	vector<Pesce*> getSchool() { return school; }
 	void computeAVGDir();
+	void Merge(School S);
+	vector<School> split();
+	void DrawSchool();
+	
 
 };
+
+
+
+void DrawOcean(vector<School>& Oceano);

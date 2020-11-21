@@ -1,6 +1,9 @@
 #include "Pesce.h"
 #include <iostream>
 
+
+
+
 Pesce::Pesce() {
     float arr[3] = { 0.0, 0.0, 0.0 };
     setPos(arr);
@@ -16,8 +19,17 @@ Pesce::Pesce(float* p, float* v, float* a) {
     setVel(v);
     setAcc(a);
     for (int i = 0; i < 8; i++) holes[i] = Hole(pos, vel, i+1);
-    
+    }
+
+Pesce::Pesce(float* p, float* v) {
+    //assuming everything has the same size, as it should be
+    setPos(p);
+    setVel(v);
+    float a[3] = { 0,0,0 };
+    setAcc(a);
+    for (int i = 0; i < 8; i++) holes[i] = Hole(pos, vel, i + 1);
 }
+
 void Pesce::setPos(float* p) {
 	for (int i = 0; i < DIMARR; i++)
 		pos[i] = p[i];
@@ -39,9 +51,11 @@ void Pesce::setTheta(float t) {
 }
 
 void Pesce::Nuota() {
+    float v = askModule(vel);
     //incremento della posizione e della velocità del pesce
     for (int k = 0; k < DIMARR; ++k)
     {
+        if (v > 5) acc[k] += -pow(vel[k],3)/(abs(vel[k])+0.0000001); //attrito viscoso
         pos[k] += vel[k] * dt;
         vel[k] += acc[k] * dt;
     }
@@ -67,6 +81,7 @@ void Pesce::NuotainCerchio(float &t, int i) {
     t +=dt;
     
 }
+
 
 float Pesce::computeTheta() {
     return atan2f(vel[1], vel[0])*(180/M_PI);
