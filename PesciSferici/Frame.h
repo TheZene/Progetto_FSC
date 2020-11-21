@@ -11,6 +11,7 @@
 
 #define LIGHT 1
 #define SFERA 44
+#define BUCA 62
 
 
 class Frame : public Fl_Gl_Window {

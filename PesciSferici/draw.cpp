@@ -83,7 +83,7 @@ void draw_linea() {
     glEnd();
 }
 //------------------------------------------------------
-void draw_pesce() {
+/*void draw_pesce() {
     
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
@@ -134,7 +134,7 @@ void draw_pesce() {
 // ********************************************************************************************************
 void draw_scene(void) {
 
-    draw_pesce();
+    draw_pesce2();
 
     glColor3f(0.1, 1.0, 0.1);		// redish
 }
