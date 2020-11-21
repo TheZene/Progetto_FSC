@@ -1,15 +1,18 @@
 #define _USE_MATH_DEFINES
 #include "Frame.h"
+#include "Hole.h"
 #include <stdlib.h>     
 #include <time.h>
 #include <vector>
 #include <stdlib.h>
 #include <math.h>
 
+
 #pragma once
 //#define L 5
 //#define SFERETTA 7
 #define DIMARR 3
+
 
 using namespace std;
 
@@ -31,6 +34,7 @@ private:
 	float pos[DIMARR];
 	float vel[DIMARR];
 	float acc[DIMARR];
+	Hole holes[8];
 	float theta;
 public:
 	Pesce();
@@ -44,5 +48,6 @@ public:
 	float* getAcc() { return acc; }
 	float getTheta() { return theta; }
 	void Nuota();
+	void NuotainCerchio(float &t, int i);
 	float computeTheta();
 };

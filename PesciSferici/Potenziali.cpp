@@ -78,7 +78,7 @@ float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
 float RepulsiveForceFishX(float* PosFish1, float* PosFish2)  //pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return ((12.f) * (PosFish2[0] - PosFish1[0])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 13)));
+	return ((12.f) * (PosFish2[0] - PosFish1[0])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale, 13)));
 }
 
 
@@ -86,14 +86,14 @@ float RepulsiveForceFishX(float* PosFish1, float* PosFish2)  //pesce 1 crea il p
 float RepulsiveForceFishY(float* PosFish1, float* PosFish2) //pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return ((12.f) * (PosFish2[1] - PosFish1[1])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 13)));
+	return ((12.f) * (PosFish2[1] - PosFish1[1])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale, 13)));
 }
 
 
 float RepulsiveForceFishZ(float* PosFish1, float* PosFish2) //pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	return ((12.f) * (PosFish2[2] - PosFish1[2])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f + 0.5f, 13)));
+	return ((12.f) * (PosFish2[2] - PosFish1[2])) / (r * (pow(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale, 13)));
 }
 
 

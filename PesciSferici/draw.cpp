@@ -10,25 +10,6 @@
 #include "draw.h"
 #include "Frame.h"
 
-double phi(double x, double y) {
-    return atan2(y, x);
-}
-
-double theta(double x, double y, double z) {
-    double t = atan(sqrt(x * x + y * y) / z);
-    if (z >= 0) return t;
-    else return t + 2 * acos(0.0);
-}
-
-double distance(double x, double y, double z)
-{
-    double dist = 0;
-    double xs[] = { x, y, z };
-    /*for (int i = 0; i < 3; ++i)
-        dist += pow((xs[i] - Xp[i]), 2);*/
-    return sqrt(dist);
-}
-
 //-------------------------------------------------------------------------------------------------
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3)
 {
@@ -72,11 +53,10 @@ void draw_cube(void) {
     glColor3f(1.0, 1.0, 1.0);
 }
 //------------------------------------------------------
-void draw_pesce() {
+/*void draw_pesce() {
     
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
-        
         float arr0[4][3] = { { 0.0, 0.0, 0.0 },
                              { 4.0, 0.0, 0.0 }, 
                              { -4.0, -4.0, 0.0 },
@@ -113,8 +93,6 @@ void draw_pesce() {
     }
     glLoadIdentity();
     gluLookAt(s->getSchool()[0]->getPos()[0]-30, s->getSchool()[0]->getPos()[1], 60, s->getSchool()[0]->getPos()[0], s->getSchool()[0]->getPos()[1], s->getSchool()[0]->getPos()[2], 0, 1, 0);
-
-
     /*if (lastTheta != s->getSchool()[0]->computeTheta()) {
         glRotatef(s->getSchool()[0]->computeTheta(), 0, 0, 1);
         glPushMatrix();
@@ -126,12 +104,24 @@ void draw_pesce() {
         0, 1, 0);
     glRotatef(s->getSchool()[0]->computeTheta(), 1, 1, 1);
     glPopMatrix();*/
+//}*/
 
+
+//pesce con moto circolare
+void draw_pesce2(void) {
+    int i = 0;
+    //i=0->ruta su piano xz i=1->ruota su piano xy, altri valori->bohhh
+    cerchio.NuotainCerchio(t, i);
+    //grafica del pesce
+    glPushMatrix();
+    glTranslated(cerchio.getPos()[0], cerchio.getPos()[1], cerchio.getPos()[2]);
+    glCallList(SFERA);
+    glPopMatrix();
 }
 // ********************************************************************************************************
 void draw_scene(void) {
 
-    draw_pesce();
+    draw_pesce2();
 
     glColor3f(0.1, 1.0, 0.1);		// redish
     //glFrontFace(GL_CW); 
