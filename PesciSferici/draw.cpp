@@ -104,7 +104,7 @@ void draw_cube(void) {
         0, 1, 0);
     glRotatef(s->getSchool()[0]->computeTheta(), 1, 1, 1);
     glPopMatrix();*/
-}*/
+//}*/
 
 
 //pesce con moto circolare
