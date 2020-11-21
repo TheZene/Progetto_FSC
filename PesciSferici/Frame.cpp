@@ -68,7 +68,7 @@ void Frame::draw() {
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
         glLoadIdentity();                                      // Reset The View
-        gluLookAt(0.0, 0.0, 60, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+        gluLookAt(0.0, 0.0, 120, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 

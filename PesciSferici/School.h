@@ -26,8 +26,11 @@ class School {
 private:
 	vector<Pesce*> school; 
 	float dir[3]; 
-	//float dimensions[3]; //dimensioni del banco (lunghezza, larghezza, altezza, modellato come un cilindro
-	//float centro; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
+	float dimensions[3]; //dimensioni del banco (lunghezza, larghezza, altezza, modellato come un cilindro
+	float max[3] = { 0, 0, 0 };
+	float min[3] = { 0, 0, 0 };
+    float centro[3]; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
+	float theta; //angolo rispetto senza z
 public:
 	School() { dir[0] = 0.0; dir[1] = 0.0; }
 	School(Pesce* p) { dir[0] = 0.0; dir[1] = 0.0; school.push_back(p); }
@@ -36,5 +39,10 @@ public:
 	void addPesce(Pesce* p) { school.push_back(p); }
 	vector<Pesce*> getSchool() { return school; }
 	void computeAVGDir();
+	float* getCentro() { return centro; }
+	float getTheta() { return theta;  }
+	void resetMinMax() { for (int i = 0; i < DIMARR; i++) { min[i] = FLT_MAX; max[i] = -FLT_MAX; } }
 
+	float* getMin() { return min; }
+	float* getMax() { return max; }
 };

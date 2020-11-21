@@ -11,16 +11,25 @@ void School::setDir(float* arr) {
 
 void School::computeAVGDir() {
 	int i = 0;
-	float appArr[] = { 0.0, 0.0, 0.0 };
-	float thetaTot = 0.0;
+	float totV[] = { 0.0, 0.0, 0.0 };
+	float totP[] = { 0.0, 0.0, 0.0 };
+	resetMinMax();
+	float valP = 0;
+	float valV = 0.0;
 	for (i = 0; i < school.size(); i++) {
-		for (int j = 0; j < 3; j++) {
-			appArr[j] += school[i]->getVel()[j] ;
+		for (int j = 0; j < DIMARR; j++) {
+			valV = school[i]->getVel()[j];
+			valP = school[i]->getPos()[j];
+			totV[j] += valV;
+			totP[j] += valP;
+			if (max[j] < valP) max[j] = valP;
+			if (min[j] > valP) min[j] = valP;
 		}
 	}
-	thetaTot = atan2f(appArr[1], appArr[0]) / school.size()* (180 / M_PI);
-	
-	//printf("%f, %f, %f ", appArr[0], appArr[1], appArr[2]);
+	theta = atan2f(totV[0], totV[1]);
+	for (int i = 0; i < DIMARR; i++)
+		//dimensions[i] = max[i] - min[i];
+		centro[i] = totP[i] / school.size();
 }
 
 //TODO: calcolare l'asse per centrare il banco di pesci
