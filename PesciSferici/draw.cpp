@@ -10,28 +10,6 @@
 #include "draw.h"
 #include "Frame.h"
 
-#define LINEA     3
-
-
-double phi(double x, double y) {
-    return atan2(y, x);
-}
-
-double theta(double x, double y, double z) {
-    double t = atan(sqrt(x * x + y * y) / z);
-    if (z >= 0) return t;
-    else return t + 2 * acos(0.0);
-}
-
-double distance(double x, double y, double z)
-{
-    double dist = 0;
-    double xs[] = { x, y, z };
-    /*for (int i = 0; i < 3; ++i)
-        dist += pow((xs[i] - Xp[i]), 2);*/
-    return sqrt(dist);
-}
-
 //-------------------------------------------------------------------------------------------------
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3)
 {
@@ -45,6 +23,7 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
 }
 //-------------------------------------------------------------------------------------------------
 void draw_palla(void) {
+    glColor3f(1.0, 0, 0);
     GLUquadricObj* palla;
     palla = gluNewQuadric();
     glDisable(GL_TEXTURE_2D);
@@ -57,7 +36,7 @@ void draw_palla(void) {
 }
 //------------------------------------------------------------------------------------------------
 void draw_cube(void) {
-    glColor3f(1.0f, .0f, 1.0f);
+    glColor3f(0.2, 1.0, 0.2);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, -1);
     glVertex3f(-1.0f, 1.0f, -1.0f); glVertex3f(1.0f, 1.0f, -1.0f); glVertex3f(1.0f, -1.0f, -1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
@@ -72,9 +51,9 @@ void draw_cube(void) {
     glNormal3f(1, 0, 0);
     glVertex3f(1.0f, -1.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f); glVertex3f(1.0f, 1.0f, -1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
     glEnd();
-    glColor3f(1.0, 0.2, 0);
+    glColor3f(1.0, 1.0, 1.0);
 }
-
+//------------------------------------------------------
 void draw_linea() {
     glColor3f(1, 0, 0);
     glLineWidth(6);
@@ -83,15 +62,15 @@ void draw_linea() {
     glEnd();
 }
 //------------------------------------------------------
-/*void draw_pesce() {
-    
+void draw_pesce() {
+
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
-        float arr0[4][3] = { { 4.0, -4.0, 0.0 },
-                             { 4.0, 0.0, 0.0 }, 
-                             { 8.0, 0.0, 0.0 },
+        float arr0[4][3] = { { 0.0, 0.0, 0.0 },
+                             { 4.0, 0.0, 0.0 },
+                             { -4.0, -4.0, 0.0 },
                              { -4.0, 0.0, 0.0 } };
-        float arr1[3] = { .5, 1.5, 0.0 };
+        float arr1[3] = { 2.0, 1.0, 0.0 };
         float arr2[3] = { 0.0, 0.0, 0.0 };
         Pesce* p1 = new Pesce(arr0[0], arr1, arr2);
         Pesce* p2 = new Pesce(arr0[1], arr1, arr2);
@@ -104,37 +83,54 @@ void draw_linea() {
         init = true;
     }
     //ottengo il banco di pesci
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     s->getSchool();
     //qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
     s->computeAVGDir();
-    //    // Clear The Screen And The Depth Buffer
+
     //qua disegno
     for (int i = 0; i < s->getSchool().size(); i++) {
         //calcolo lo spostamento dei pesci
         s->getSchool()[i]->Nuota();
+        glColor3f(1.0f, .0f, 1.0f);
         glPushMatrix();
         //traslo
         glTranslatef(s->getSchool()[i]->getPos()[0], s->getSchool()[i]->getPos()[1], s->getSchool()[i]->getPos()[2]);
-        glRotatef(s->getTheta() * 180 / 3.1415927, 0, 0, 1);
+        glRotatef(-s->getTheta() * 180 / 3.1415927, 0, 0, 1);
         draw_cube();
-       
         glPopMatrix();
     }
     glPushMatrix();
     glTranslatef(s->getCentro()[0], s->getCentro()[1], s->getCentro()[2]);
-    glRotatef(s->getTheta() * 180 / 3.1415927, 0, 0, 1);
+    glRotatef(-s->getTheta()* 180 / 3.1415927, 0, 0, 1);
     draw_palla();
     draw_linea();
     glPopMatrix();
-   // glLoadIdentity();
-    //gluLookAt(GLdouble(s->getCentro()[0])-20, GLdouble(s->getCentro()[1]), 60, s->getCentro()[0], s->getCentro()[1], s->getCentro()[2], 0, 1, 0);
+    glLoadIdentity();
+    gluLookAt(s->getCentro()[0], s->getCentro()[1], 60, s->getCentro()[0], s->getCentro()[1], s->getCentro()[2], 0, 1, 0);
+ }
 
-   }
+
+    //pesce con moto circolare
+    /*
+void draw_pesce2(void) {
+    int i = 0;
+    //i=0->ruta su piano xz i=1->ruota su piano xy, altri valori->bohhh
+    cerchio.NuotainCerchio(t, i);
+    //grafica del pesce
+    glPushMatrix();
+    glTranslated(cerchio.getPos()[0], cerchio.getPos()[1], cerchio.getPos()[2]);
+    glCallList(SFERA);
+    glPopMatrix();
+}*/
 // ********************************************************************************************************
 void draw_scene(void) {
 
-    draw_pesce2();
+    draw_pesce();
 
     glColor3f(0.1, 1.0, 0.1);		// redish
+    //glFrontFace(GL_CW); 
+    //glutSolidTeapot(0.5);			// draw the teapot
+   //glutSolidTorus(1,2,30,30);			            // draw the torus
+    //glutSolidCylinder(1,2,30,20);			            // draw the cylinder
+
 }

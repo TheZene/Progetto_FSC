@@ -26,7 +26,7 @@ void School::computeAVGDir() {
 			if (min[j] > valP) min[j] = valP;
 		}
 	}
-	theta = atan2f(totV[0], totV[1]);
+	theta = atan2f(totV[1], totV[0]);
 	for (int i = 0; i < DIMARR; i++)
 		//dimensions[i] = max[i] - min[i];
 		centro[i] = totP[i] / school.size();
