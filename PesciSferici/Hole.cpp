@@ -13,10 +13,10 @@ Hole::Hole(float* p, float* v, int n) {
     if (type < 5) Distance = LateralDistance;
     else if (type > 4)  Distance = VerticalDistance;
     AggiornaBuca(p, v);
-    if (type == 1||type==2) color[0] = 0.80078125, color[1] = 0.640625, color[2] = 0.203125; //gold
-    else if (type==3||type==4) color[0] =0.6, color[1] = 0.0666, color[2] =0.6; //violet
-    else if (type == 5 || type == 6) color[0] = 1., color[1] = 1., color[2] = 1.; //white
-    else if (type == 7 || type == 8) color[0] = 0., color[1] = 0., color[2] = 0.; //black
+    if (type == 1||type==2) color[0] = 0.80078125, color[1] = 0.640625, color[2] = 0.203125, force=1; //gold
+    else if (type==3||type==4) color[0] =0.6, color[1] = 0.0666, color[2] =0.6, force=0.5; //violet
+    else if (type == 5 || type == 6) color[0] = 1., color[1] = 1., color[2] = 1., force=1; //white
+    else if (type == 7 || type == 8) color[0] = 0., color[1] = 0., color[2] = 0., force=0.5; //black
     //color[0]=0.99609375, color[1] = 0.7109375, color[2] = 0.75390625; pink
 }
 

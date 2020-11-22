@@ -6,15 +6,14 @@
 #include <math.h>
 #include "Pesce.h"
 
-//#define L 5
-//#define SFERETTA 7
+
 
 /*Class: School
 * Description: classe che descrive un banco di pesci
 * 
 * Attributes:
 *	school: vector di classe pesce
-*	dir: array delle direzioni verso le quali si può muovere il banco
+*	dir: array delle direzioni verso le quali si puÃ² muovere il banco
 *Methods: 
 *	i primi tre sono costruttori, il primo vuoto per dovere, il secondo passando solo un pesce, il terzo passando un vector di pesci
 *	setDir: setter per l'array di direzioni
@@ -39,10 +38,13 @@ public:
 	void addPesce(Pesce* p) { school.push_back(p); }
 	vector<Pesce*> getSchool() { return school; }
 	void computeAVGDir();
+	void Merge(School S);
+	vector<School> split();
+	void DrawSchool();
+  void DrawOcean(vector<School>& Oceano);
 	float* getCentro() { return centro; }
 	float getTheta() { return theta;  }
 	void resetMinMax() { for (int i = 0; i < DIMARR; i++) { min[i] = FLT_MAX; max[i] = -FLT_MAX; } }
-
 	float* getMin() { return min; }
 	float* getMax() { return max; }
 };

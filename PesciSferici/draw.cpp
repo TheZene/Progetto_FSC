@@ -10,6 +10,10 @@
 #include "draw.h"
 #include "Frame.h"
 
+extern float* RepulsiveForcesFish(Pesce PesceGen, Pesce PesceSub); //il primo pesce genera il potenziale il secondo lo subisce
+extern float* AttractiveForcesSchool(School Banco, Pesce Fish); //calcola la media della posizone dei pesci del banco(centro) e la velocit� media poi fa il conto delle dimensioni massime del banco
+extern void SetAccelerazioni(vector<School>& Oceano); //setta tutte le acc di tutti i pesci
+extern void DrawOcean(vector<School>& Oceano);
 //-------------------------------------------------------------------------------------------------
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3)
 {
@@ -110,9 +114,9 @@ void draw_pesce() {
  }
 
 
-    //pesce con moto circolare
-    /*
-void draw_pesce2(void) {
+
+//pesce con moto circolare
+/*void draw_pesce2(void) {
     int i = 0;
     //i=0->ruta su piano xz i=1->ruota su piano xy, altri valori->bohhh
     cerchio.NuotainCerchio(t, i);
@@ -122,11 +126,58 @@ void draw_pesce2(void) {
     glCallList(SFERA);
     glPopMatrix();
 }*/
+//pesce con repulsione
+/*void draw_pesce3(void) {
+    //per vedere esplodere velocit� attivare e mettere posizione e velocit� del pesciolini[0] a 0 e silenziare pesciolino[0].setAcc
+    /*if (pesciolini[1].getPos()[1] < -25)
+    {
+        float k[] = { 0, -pesciolini[1].getVel()[1], 0 };
+        float kk[] = { 0, -25, 0 };
+        pesciolini[1].setVel(k);
+        pesciolini[1].setPos(kk);
+    }*//*
+    pesciolini[1].setAcc(RepulsiveForcesFish(pesciolini[0], pesciolini[1]));
+    pesciolini[0].setAcc(RepulsiveForcesFish(pesciolini[1], pesciolini[0]));
+    //grafica dei pesci
+    for (int i = 0; i < 2; i++)
+    {
+        pesciolini[i].Nuota();
+        glPushMatrix();
+        glTranslated(pesciolini[i].getPos()[0], pesciolini[i].getPos()[1], pesciolini[i].getPos()[2]);
+        glCallList(SFERA);
+        glPopMatrix();
+    }}*/
+
+//pesce con SetAccelerazione
+/*void draw_pesce4(void) {
+    
+    SetAccelerazioni(pozza);
+    //grafica dei pesci
+    for (int i = 0; i < pozza.size(); i++)
+    {
+        pozza[i].getSchool()[0]->Nuota();
+        glPushMatrix();
+        glTranslated(pozza[i].getSchool()[0]->getPos()[0], pozza[i].getSchool()[0]->getPos()[1], pozza[i].getSchool()[0]->getPos()[2]);
+        glCallList(SFERA);
+        glPopMatrix();
+    }}*/
+
+
+//pesce con drawOcean
+void draw_pesce5(void) {
+
+    DrawOcean(pozza);
+}
 // ********************************************************************************************************
 void draw_scene(void) {
 
-    draw_pesce();
+    draw_pesce5();
 
+// ********************************************************************************************************
+/*void draw_scene(void) {
+
+    draw_pesce();
+*/
     glColor3f(0.1, 1.0, 0.1);		// redish
     //glFrontFace(GL_CW); 
     //glutSolidTeapot(0.5);			// draw the teapot
