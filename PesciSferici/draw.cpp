@@ -11,7 +11,7 @@
 #include "Frame.h"
 
 extern float* RepulsiveForcesFish(Pesce PesceGen, Pesce PesceSub); //il primo pesce genera il potenziale il secondo lo subisce
-extern float* AttractiveForcesSchool(School Banco, Pesce Fish); //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
+extern float* AttractiveForcesSchool(School Banco, Pesce Fish); //calcola la media della posizone dei pesci del banco(centro) e la velocitï¿½ media poi fa il conto delle dimensioni massime del banco
 extern void SetAccelerazioni(vector<School>& Oceano); //setta tutte le acc di tutti i pesci
 extern void DrawOcean(vector<School>& Oceano);
 //-------------------------------------------------------------------------------------------------
@@ -26,7 +26,8 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
     glNormal3f(nx, ny, nz);
 }
 //-------------------------------------------------------------------------------------------------
-/*void draw_palla(void) {
+void draw_palla(void) {
+    glColor3f(1.0, 0, 0);
     GLUquadricObj* palla;
     palla = gluNewQuadric();
     glDisable(GL_TEXTURE_2D);
@@ -34,9 +35,9 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, cubeMater);
     gluQuadricDrawStyle(palla, GLU_FILL);
     gluQuadricNormals(palla, GLU_FLAT);
-    gluSphere(palla, 1.0, 50, 100);
+    gluSphere(palla, 0.5, 50, 100);
     glEnable(GL_TEXTURE_2D);
-}*/
+}
 //------------------------------------------------------------------------------------------------
 void draw_cube(void) {
     glColor3f(0.2, 1.0, 0.2);
@@ -57,12 +58,20 @@ void draw_cube(void) {
     glColor3f(1.0, 1.0, 1.0);
 }
 //------------------------------------------------------
-/*void draw_pesce() {
-    
+void draw_linea() {
+    glColor3f(1, 0, 0);
+    glLineWidth(6);
+    glBegin(GL_LINES);
+    glVertex3f(-15, -15, 0); glVertex3f(15, 15, 0);
+    glEnd();
+}
+//------------------------------------------------------
+void draw_pesce() {
+
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
         float arr0[4][3] = { { 0.0, 0.0, 0.0 },
-                             { 4.0, 0.0, 0.0 }, 
+                             { 4.0, 0.0, 0.0 },
                              { -4.0, -4.0, 0.0 },
                              { -4.0, 0.0, 0.0 } };
         float arr1[3] = { 2.0, 1.0, 0.0 };
@@ -81,34 +90,29 @@ void draw_cube(void) {
     s->getSchool();
     //qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
     s->computeAVGDir();
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
 
     //qua disegno
     for (int i = 0; i < s->getSchool().size(); i++) {
         //calcolo lo spostamento dei pesci
         s->getSchool()[i]->Nuota();
-        glColor3f(1.0f, .0f, 1.0f);     
+        glColor3f(1.0f, .0f, 1.0f);
         glPushMatrix();
         //traslo
         glTranslatef(s->getSchool()[i]->getPos()[0], s->getSchool()[i]->getPos()[1], s->getSchool()[i]->getPos()[2]);
-        glRotatef(-(atan(0.5)*180/3.14), 0, 0, 1);
+        glRotatef(-s->getTheta() * 180 / 3.1415927, 0, 0, 1);
         draw_cube();
         glPopMatrix();
     }
+    glPushMatrix();
+    glTranslatef(s->getCentro()[0], s->getCentro()[1], s->getCentro()[2]);
+    glRotatef(-s->getTheta()* 180 / 3.1415927, 0, 0, 1);
+    draw_palla();
+    draw_linea();
+    glPopMatrix();
     glLoadIdentity();
-    gluLookAt(s->getSchool()[0]->getPos()[0]-30, s->getSchool()[0]->getPos()[1], 60, s->getSchool()[0]->getPos()[0], s->getSchool()[0]->getPos()[1], s->getSchool()[0]->getPos()[2], 0, 1, 0);
-    /*if (lastTheta != s->getSchool()[0]->computeTheta()) {
-        glRotatef(s->getSchool()[0]->computeTheta(), 0, 0, 1);
-        glPushMatrix();
-        lastTheta = s->getSchool()[0]->computeTheta();
-    }*/
-    /*glLoadIdentity();
-    gluLookAt(s->getSchool()[0]->getPos()[0] - 4.0, 9.0, s->getSchool()[0]->getPos()[2] + 24.0,
-        s->getSchool()[0]->getPos()[0] - 4.0, 2.0, s->getSchool()[0]->getPos()[2],
-        0, 1, 0);
-    glRotatef(s->getSchool()[0]->computeTheta(), 1, 1, 1);
-    glPopMatrix();*/
-//}*/
+    gluLookAt(s->getCentro()[0], s->getCentro()[1], 60, s->getCentro()[0], s->getCentro()[1], s->getCentro()[2], 0, 1, 0);
+ }
+
 
 
 //pesce con moto circolare
@@ -122,10 +126,9 @@ void draw_cube(void) {
     glCallList(SFERA);
     glPopMatrix();
 }*/
-
 //pesce con repulsione
 /*void draw_pesce3(void) {
-    //per vedere esplodere velocità attivare e mettere posizione e velocità del pesciolini[0] a 0 e silenziare pesciolino[0].setAcc
+    //per vedere esplodere velocitï¿½ attivare e mettere posizione e velocitï¿½ del pesciolini[0] a 0 e silenziare pesciolino[0].setAcc
     /*if (pesciolini[1].getPos()[1] < -25)
     {
         float k[] = { 0, -pesciolini[1].getVel()[1], 0 };
@@ -170,6 +173,11 @@ void draw_scene(void) {
 
     draw_pesce5();
 
+// ********************************************************************************************************
+/*void draw_scene(void) {
+
+    draw_pesce();
+*/
     glColor3f(0.1, 1.0, 0.1);		// redish
     //glFrontFace(GL_CW); 
     //glutSolidTeapot(0.5);			// draw the teapot
