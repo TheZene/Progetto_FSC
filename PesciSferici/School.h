@@ -4,7 +4,8 @@
 #include <time.h>
 #include <vector>
 #include <math.h>
-#include "Pesce.h"
+#include "Fish.h"
+
 
 
 
@@ -23,26 +24,27 @@
 */
 class School {
 private:
-	vector<Pesce*> school; 
+	vector<Fish*> school; 
 	float dir[3]; 
 	float dimensions[3]; //dimensioni del banco (lunghezza, larghezza, altezza, modellato come un cilindro
 	float max[3] = { 0, 0, 0 };
 	float min[3] = { 0, 0, 0 };
-    float centro[3]; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
-	float theta; //angolo rispetto senza z
+    float mid[3]; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
+	float phi;
+	float theta;
 public:
 	School() { dir[0] = 0.0; dir[1] = 0.0; }
-	School(Pesce* p) { dir[0] = 0.0; dir[1] = 0.0; school.push_back(p); }
-	School(vector<Pesce*> s);
+	School(Fish* p) { dir[0] = 0.0; dir[1] = 0.0; school.push_back(p); }
+	School(vector<Fish*> s);
 	void setDir(float* arr);
-	void addPesce(Pesce* p) { school.push_back(p); }
-	vector<Pesce*> getSchool() { return school; }
+	void addPesce(Fish* p) { school.push_back(p); }
+	vector<Fish*> getSchool() { return school; }
 	void computeAVGDir();
 	void Merge(School S);
 	vector<School> split();
 	void DrawSchool();
-  void DrawOcean(vector<School>& Oceano);
-	float* getCentro() { return centro; }
+	void DrawOcean(vector<School>& Oceano);
+	float* getMid() { return mid; }
 	float getTheta() { return theta;  }
 	void resetMinMax() { for (int i = 0; i < DIMARR; i++) { min[i] = FLT_MAX; max[i] = -FLT_MAX; } }
 	float* getMin() { return min; }
