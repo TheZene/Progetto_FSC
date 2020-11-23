@@ -31,8 +31,8 @@ Pesce::Pesce(float* p, float* v) {
 }
 
 void Pesce::setPos(float* p) {
-	for (int i = 0; i < DIMARR; i++)
-		pos[i] = p[i];
+    for (int i = 0; i < DIMARR; i++)
+        pos[i] = p[i];
 }
 
 void Pesce::setVel(float* v) {
@@ -41,7 +41,7 @@ void Pesce::setVel(float* v) {
 }
 
 void Pesce::setAcc(float* a) {
-	for (int i = 0; i < DIMARR; i++)
+    for (int i = 0; i < DIMARR; i++)
 		acc[i] = a[i];
 }
 
@@ -52,9 +52,10 @@ void Pesce::setTheta(float t) {
 
 void Pesce::Nuota() {
     float v = askModule(vel);
-    //incremento della posizione e della velocità del pesce
+   // //incremento della posizione e della velocità del pesce
     for (int k = 0; k < DIMARR; ++k)
     {
+        
         if (v > 5) acc[k] += -pow(vel[k],3)/(abs(vel[k])+0.0000001); //attrito viscoso
         pos[k] += vel[k] * dt;
         vel[k] += acc[k] * dt;

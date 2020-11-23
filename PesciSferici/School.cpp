@@ -33,17 +33,27 @@ void School::computeAVGDir() {
 			if (min[j] > valP) min[j] = valP;
 		}
 	}
-	theta = atan2f(totV[1], totV[0]);
-	for (int i = 0; i < DIMARR; i++)
+	phi = askPhi(totV);
+	theta = askTheta(totV);
+	for (int i = 0; i < DIMARR; i++) {
 		//dimensions[i] = max[i] - min[i];
 		centro[i] = totP[i] / school.size();
+	}
 }
 
 //TODO: calcolare l'asse per centrare il banco di pesci
 //ossia calcolare la lunghezza del banco (EZ) e calcolare l'angolo della direzione media del banco (?)
 //come se calcola l'angolo, in base a cosa? Che poi in realtà sono due angoli, uno tra x,z e uno tra x,y o z,y dipende
 
-
+void draw_direction() {
+	glColor3f(1, 0, 0);
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glVertex3f(10, 0, 0); glVertex3f(15, 0, 0);
+	glVertex3f(13, 3, 0); glVertex3f(15, 0, 0);
+	glVertex3f(13, -3, 0); glVertex3f(15, 0, 0);
+	glEnd();
+}
 
 void School::DrawSchool()
 {
@@ -54,7 +64,18 @@ void School::DrawSchool()
 		glTranslated(school[i]->getPos()[0], school[i]->getPos()[1], school[i]->getPos()[2]);
 		glCallList(SFERA);
 		glPopMatrix();
+		//qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
+		computeAVGDir();
 	}
+	glPushMatrix();
+	glTranslatef(centro[0], centro[1], centro[2]);
+	glCallList(CENTRO);
+	glRotatef(phi * 180 / M_PI, 0, 0, 1);
+	glRotatef(theta * 180 / M_PI, 1, 0, 0);
+	draw_direction();
+	glPopMatrix();
+	glLoadIdentity();
+	gluLookAt(centro[0], centro[1], centro[2]+150.0, centro[0], centro[1], centro[2], 0, 1, 0);
 }
 
 

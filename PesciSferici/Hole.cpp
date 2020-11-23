@@ -61,33 +61,4 @@ float askTheta(float* X) {
 
 
 
-//Vecchi dinosauri che aspettano il vostro consenso per essere eliminati
-/*
-void Hole::TraslaBuca(float* v) {
-    for (int i = 0; i < 3; i++) pos[i] += v[i] * dt;
-}
-
-void Hole::RuotaBuca(float* p, float* angle) {
-    float memory[2] = { angle[0], angle[1] };
-    //trovo il vettore che va dal pesce alla buca
-    for (int i = 0; i < 3; i++) pos[i] -= p[i];
-    //angle[0]=delta phi->nuovo phi, angle[1]=delta theta->nuovo theta
-    angle[0] += askPhi(pos);
-    angle[1] = pi() - angle[1];
-    //trovo il nuovo vettore che va dal pesce alla buca
-    pos[0] = Distance * sin(angle[1]) * cos(angle[0]);
-    pos[1] = Distance * sin(angle[1]) * sin(angle[0]);
-    pos[2] = Distance * cos(angle[1]);
-    //vado in buca
-    for (int i = 0; i < 3; i++) pos[i] = p[i] + pos[i];
-    angle[0] = memory[0];
-    angle[1] = memory[1];
-
-}
-*/
-
-
-
-
-
 

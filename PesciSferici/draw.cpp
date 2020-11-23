@@ -6,9 +6,9 @@
 #include <GL/glut.h>	  
 #include <math.h>
 #include <thread>
-
 #include "draw.h"
 #include "Frame.h"
+
 
 extern float* RepulsiveForcesFish(Pesce PesceGen, Pesce PesceSub); //il primo pesce genera il potenziale il secondo lo subisce
 extern float* AttractiveForcesSchool(School Banco, Pesce Fish); //calcola la media della posizone dei pesci del banco(centro) e la velocit� media poi fa il conto delle dimensioni massime del banco
@@ -58,15 +58,9 @@ void draw_cube(void) {
     glColor3f(1.0, 1.0, 1.0);
 }
 //------------------------------------------------------
-void draw_linea() {
-    glColor3f(1, 0, 0);
-    glLineWidth(6);
-    glBegin(GL_LINES);
-    glVertex3f(-15, -15, 0); glVertex3f(15, 15, 0);
-    glEnd();
-}
+
 //------------------------------------------------------
-void draw_pesce() {
+/*void draw_pesce() {
 
     //se non ho inizializzato la struttura dati la inizializzo
     if (!init) {
@@ -112,7 +106,7 @@ void draw_pesce() {
     glLoadIdentity();
     gluLookAt(s->getCentro()[0], s->getCentro()[1], 60, s->getCentro()[0], s->getCentro()[1], s->getCentro()[2], 0, 1, 0);
  }
-
+ */
 
 
 //pesce con moto circolare
@@ -163,15 +157,13 @@ void draw_pesce() {
     }}*/
 
 
-//pesce con drawOcean
-void draw_pesce5(void) {
-
+/*void draw_pesce5(void) {
     DrawOcean(pozza);
-}
+}*/
 // ********************************************************************************************************
+//pesce con drawOcean
 void draw_scene(void) {
-
-    draw_pesce5();
+    DrawOcean(pozza);
 
 // ********************************************************************************************************
 /*void draw_scene(void) {

@@ -8,6 +8,7 @@
 
 
 
+
 /*Class: School
 * Description: classe che descrive un banco di pesci
 * 
@@ -29,7 +30,8 @@ private:
 	float max[3] = { 0, 0, 0 };
 	float min[3] = { 0, 0, 0 };
     float centro[3]; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
-	float theta; //angolo rispetto senza z
+	float phi;
+	float theta;
 public:
 	School() { dir[0] = 0.0; dir[1] = 0.0; }
 	School(Pesce* p) { dir[0] = 0.0; dir[1] = 0.0; school.push_back(p); }
@@ -41,7 +43,7 @@ public:
 	void Merge(School S);
 	vector<School> split();
 	void DrawSchool();
-  void DrawOcean(vector<School>& Oceano);
+	void DrawOcean(vector<School>& Oceano);
 	float* getCentro() { return centro; }
 	float getTheta() { return theta;  }
 	void resetMinMax() { for (int i = 0; i < DIMARR; i++) { min[i] = FLT_MAX; max[i] = -FLT_MAX; } }
