@@ -4,17 +4,17 @@
 #include <time.h>
 #include <vector>
 #include <math.h>
-#include "Pesce.h"
+#include "Fish.h"
 
-//#define L 5
-//#define SFERETTA 7
+
+
 
 /*Class: School
 * Description: classe che descrive un banco di pesci
 * 
 * Attributes:
 *	school: vector di classe pesce
-*	dir: array delle direzioni verso le quali si può muovere il banco
+*	dir: array delle direzioni verso le quali si puÃ² muovere il banco
 *Methods: 
 *	i primi tre sono costruttori, il primo vuoto per dovere, il secondo passando solo un pesce, il terzo passando un vector di pesci
 *	setDir: setter per l'array di direzioni
@@ -24,17 +24,29 @@
 */
 class School {
 private:
-	vector<Pesce*> school; 
+	vector<Fish*> school; 
 	float dir[3]; 
-	//float dimensions[3]; //dimensioni del banco (lunghezza, larghezza, altezza, modellato come un cilindro
-	//float centro; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
+	float dimensions[3]; //dimensioni del banco (lunghezza, larghezza, altezza, modellato come un cilindro
+	float max[3] = { 0, 0, 0 };
+	float min[3] = { 0, 0, 0 };
+    float mid[3]; //fulcro attorno al quale i pesci si stringono in presenza di un predatore
+	float phi;
+	float theta;
 public:
 	School() { dir[0] = 0.0; dir[1] = 0.0; }
-	School(Pesce* p) { dir[0] = 0.0; dir[1] = 0.0; school.push_back(p); }
-	School(vector<Pesce*> s);
+	School(Fish* p) { dir[0] = 0.0; dir[1] = 0.0; school.push_back(p); }
+	School(vector<Fish*> s);
 	void setDir(float* arr);
-	void addPesce(Pesce* p) { school.push_back(p); }
-	vector<Pesce*> getSchool() { return school; }
+	void addPesce(Fish* p) { school.push_back(p); }
+	vector<Fish*> getSchool() { return school; }
 	void computeAVGDir();
-
+	void Merge(School S);
+	vector<School> split();
+	void DrawSchool();
+	void DrawOcean(vector<School>& Oceano);
+	float* getMid() { return mid; }
+	float getTheta() { return theta;  }
+	void resetMinMax() { for (int i = 0; i < DIMARR; i++) { min[i] = FLT_MAX; max[i] = -FLT_MAX; } }
+	float* getMin() { return min; }
+	float* getMax() { return max; }
 };

@@ -1,0 +1,9 @@
+#define FISH_LENGTH 2
+#define HOLE_DIM 5.f
+#define LIFE_ROOM 0.5f
+#define MIN_DIST 400
+#define MASS 1
+#define DIMARR 3
+#define dt 0.01
+#define LATERAL_DISTANCE 4
+#define VERTICAL_DISTANCE 2

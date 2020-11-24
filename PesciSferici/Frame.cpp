@@ -7,7 +7,7 @@
 #include <FL/Enumerations.H>
 
 #include "Frame.h"
-#include "Pesce.h"
+#include "Fish.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -31,7 +31,12 @@ void Frame::init(void) {
     gluQuadricNormals(palla, GLU_FLAT);
     glNewList(SFERA, GL_COMPILE);
     glColor3f(1.0f, .0f, .0f);
-    gluSphere(palla, 0.5, 30, 30);
+    gluSphere(palla, 0.8, 30, 30);
+    glEndList();
+
+    glNewList(CENTRO, GL_COMPILE);
+    glColor3f(.5f, .5f, .5f);
+    gluSphere(palla, 0.1, 30, 30);
     glEndList();
 
     //per disegnare le buche (giusto per vedere se sono nelle posizioni giuste)
@@ -77,8 +82,8 @@ void Frame::draw() {
         glMatrixMode(GL_MODELVIEW);                            // Select The Modelview Matrix
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
-        glLoadIdentity();                                      // Reset The View
-        gluLookAt(0.0, 0.0, 60, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+       // glLoadIdentity();                                      // Reset The View
+       // gluLookAt(0.0, 0.0, 120, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -89,13 +94,6 @@ void Frame::draw() {
     //glClear(GL_DEPTH_BUFFER_BIT); 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     draw_scene();
-
-/*    glPushMatrix();
-    glRotated(ruotaZ, 0, 0, 1); 
-    glRotated(ruotaX, 1, 0, 0); 
-    glRotated(ruotaY, 0, 1, 0);
-    glScalef(zoom, zoom, zoom);
-    glPopMatrix();*/
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -133,6 +131,7 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
         ret = 1;
         // Based on the action, print the action and
         // coordinates where it occurred.
+        //TODO: fix rotations to camera 
         if (event == FL_PUSH) {
             //inizializzo le posizioni in cui clicko
             prevx = x;
@@ -143,10 +142,6 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
             spostamentox = prevx - x;
             spostamentoy = prevy - y;
             //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
-            if (!flag) {
-                glPushMatrix();
-                flag = 1;
-            }
             glRotatef(-spostamentox, 0, 1, 0);
             glRotatef(-spostamentoy, 1, 0, 0);
 
@@ -156,8 +151,6 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
             /**/
         }
         else if (event == FL_RELEASE) {
-            glPopMatrix();
-            flag = 0;
             spostamentox = prevx - x;
             spostamentoy = prevy - y;
             glRotatef(-spostamentox, 0, 1, 0);

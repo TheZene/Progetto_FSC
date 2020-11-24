@@ -12,12 +12,11 @@
 #else
 #include <math.h>
 #include <iostream>
-#include "Pesce.h"
+#include "Fish.h"
 #include "School.h"
-#define LUNGHEZZA_PESCE 2
-#define DIM_BUCA 5.f
-#define Spazio_Vitale 0.5f
-
+#include "define.h"
+#endif
+/*
 float dist(float*, float*); //calcolo distanza tra due pesci
 float modul3(float*); //modulo 3 d
 float* FindDir(float*); //trova angoli delle coordinate sferiche
@@ -101,3 +100,4 @@ float* AllForcesFish(Pesce, Pesce);
 
 #define POTENZIALI 
 #endif
+*/
