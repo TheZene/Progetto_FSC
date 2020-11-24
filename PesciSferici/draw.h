@@ -23,7 +23,7 @@ float vel4[3] = { 1, 0.8, -0.3 };
 
 Fish uno (pos1, vel1);
 Fish due(pos2, vel2);
-Fish tre(pos, vel3);
+Fish tre(pos3, vel3);
 Fish quattro(pos4, vel4);
 School un(&uno);
 School du(&due);
