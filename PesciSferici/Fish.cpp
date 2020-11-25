@@ -53,13 +53,15 @@ void Fish::setTheta(float t) {
 void Fish::Nuota() {
     float v = askModule(vel);
    // //incremento della posizione e della velocità del pesce
+    printf("velocita': %f \n", v);
     for (int k = 0; k < DIMARR; ++k)
     {
-        
         if (v > 5) acc[k] += -pow(vel[k],3)/(abs(vel[k])+0.0000001); //attrito viscoso
         pos[k] += vel[k] * dt;
         vel[k] += acc[k] * dt;
+        //printf("%f ", acc[k]);
     }
+    //printf("\n");
 
     //movimenti e grafica delle buche
     for (int i = 0; i < 8; i++)

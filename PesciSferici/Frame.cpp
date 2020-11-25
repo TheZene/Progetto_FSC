@@ -108,15 +108,13 @@ int Frame::handle(int event) {
     case FL_MOVE:
         return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_FOCUS:
-        label("Gained focus");
-        damage(1);
+        //
         return 1;
     case FL_UNFOCUS:
-        label("Lost focus");
-        damage(1);
+        //
         return 1;
     default:
-        return Fl_Window::handle(event);
+        //return Fl_Window::handle(event);
     case FL_KEYBOARD:  return handle_key(event, Fl::event_key());
     };
 }
