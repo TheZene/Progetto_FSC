@@ -5,5 +5,5 @@
 #define massa 1
 #define DIMARR 3
 #define dt 0.01
-#define LATERAL_DISTANCE 4
-#define VERTICAL_DISTANCE 2
+#define LateralDistance 4
+#define VerticalDistance 2

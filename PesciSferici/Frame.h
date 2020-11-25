@@ -11,7 +11,6 @@
 
 #define LIGHT 1
 #define SFERA 44
-#define CENTRO 22
 #define BUCA 62
 
 

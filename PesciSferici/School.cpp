@@ -2,11 +2,11 @@
 
 
 extern float dist(float*, float*); //calcolo distanza tra due pesci
-extern void setAccelerations(vector<School>& Oceano);
+extern void SetAccelerazioni(vector<School>& Oceano);
 
 
 
-School::School(vector<Fish*> s) {
+School::School(vector<Pesce*> s) {
 	for (int i = 0; i < s.size(); i++)
 		school.push_back(s[i]);
 	for (int i = 0; i < 3; i++) dir[i] = 0;
@@ -33,23 +33,17 @@ void School::computeAVGDir() {
 			if (min[j] > valP) min[j] = valP;
 		}
 	}
-	phi = askPhi(totV);
-	theta = askTheta(totV);
-	for (i = 0; i < DIMARR; i++) {
+	theta = atan2f(totV[1], totV[0]);
+	for (int i = 0; i < DIMARR; i++)
 		//dimensions[i] = max[i] - min[i];
-		mid[i] = totP[i] / school.size();
-	}
+		centro[i] = totP[i] / school.size();
 }
 
-void draw_direction() {
-	glColor3f(1, 0, 0);
-	glLineWidth(2);
-	glBegin(GL_LINES);
-	glVertex3f(10, 0, 0); glVertex3f(15, 0, 0);
-	glVertex3f(13, 3, 0); glVertex3f(15, 0, 0);
-	glVertex3f(13, -3, 0); glVertex3f(15, 0, 0);
-	glEnd();
-}
+//TODO: calcolare l'asse per centrare il banco di pesci
+//ossia calcolare la lunghezza del banco (EZ) e calcolare l'angolo della direzione media del banco (?)
+//come se calcola l'angolo, in base a cosa? Che poi in realtà sono due angoli, uno tra x,z e uno tra x,y o z,y dipende
+
+
 
 void School::DrawSchool()
 {
@@ -60,18 +54,7 @@ void School::DrawSchool()
 		glTranslated(school[i]->getPos()[0], school[i]->getPos()[1], school[i]->getPos()[2]);
 		glCallList(SFERA);
 		glPopMatrix();
-		//qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
-		computeAVGDir();
 	}
-	glPushMatrix();
-	glTranslatef(mid[0], mid[1], mid[2]);
-	glCallList(CENTRO);
-	glRotatef(phi * 180 / M_PI, 0, 0, 1);
-	glRotatef(theta * 180 / M_PI, 1, 0, 0);
-	draw_direction();
-	glPopMatrix();
-	glLoadIdentity();
-	gluLookAt(mid[0], mid[1], mid[2]+150.0, mid[0], mid[1], mid[2], 0, 1, 0);
 }
 
 
@@ -97,16 +80,30 @@ vector<School> School::split()
 
 
 
-void Merge(vector<School> &Oceano)
+void Merge(vector<School>& Oceano)
 {
+	//splitting da perfezionare! (non essenziale)
+
+	/*vector<School> split;
+	for (int t=0; t<Oceano.size(); t++)
+		if(Oceano[t].getSchool().size()>1)
+		{
+			//splitto il banco in tanti banchi singoletti e li aggiungo a Oceano
+			split = Oceano[t].split();
+			for (int o = 0; 0 < split.size(); o++)
+				Oceano.push_back(split[0]);
+			//elimino il banco
+			Oceano.erase(Oceano.begin() + t);
+		}*/
+
 	for (int a = 0; a < Oceano.size(); a++)
 		for (int b = 0; b < Oceano[a].getSchool().size(); b++)
 		{
-			Fish* Fish = Oceano[a].getSchool()[b];
+			Pesce* Fish = Oceano[a].getSchool()[b];
 			for (int i = 0; i < Oceano.size(); i++)
-				if(a!=i)
+				if (a != i)
 					for (int k = 0; k < Oceano[i].getSchool().size(); k++)
-						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < MIN_DIST)
+						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < MinDist)
 						{
 							Oceano[a].Merge(Oceano[i]);
 							Oceano.erase(Oceano.begin() + i);
@@ -119,7 +116,7 @@ void Merge(vector<School> &Oceano)
 void DrawOcean(vector<School>& Oceano)
 {
 	Merge(Oceano);
-	setAccelerations(Oceano);
+	SetAccelerazioni(Oceano);
 	for (int i = 0; i < Oceano.size(); i++)
 		Oceano[i].DrawSchool();
 }
