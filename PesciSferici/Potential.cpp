@@ -326,6 +326,9 @@ float* AttractiveForcesSchool(School Banco, Fish Fish) //calcola la media della 
 	return AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r);
 }
 
+a ? i : o
+
+if(r = maxR[i] > r)
 //##########################
 //Forze Attrative per pesci-buca (overload pesce-buca)
 
@@ -397,7 +400,7 @@ void setAccelerations(vector<School> &Oceano)
 				for (int u = 0; u < 3; u++)
 					totAcc[u] += (force[u] / MASS)*weightSchool/weightTot;
 				//cout << "accTotx= " <<Fish->getAcc()[0]<<endl;
-				cout << "Vtotx= " << Fish->getVel()[0] << endl;
+				//cout << "Vtotx= " << Fish->getVel()[0] << endl;
 				
 				//consideriamo i potenziali repulsivi dei pesci vicini del banco corrente
 				for (int j=0; j < Oceano[PerceivedSchools[i]].getSchool().size(); j++)
