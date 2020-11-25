@@ -396,9 +396,6 @@ void SetAccelerazioni(vector<School> &Oceano)
 				forza = AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish);
 				for (int u = 0; u < 3; u++)
 					accTot[u] += (forza[u] / massa)*pesoBanco/pesoTot;
-
-				cout << "accTotx= " <<Fish->getVel()[0]<<endl;
-				cout << "Vtotx= " << Fish->getVel()[0] << endl;
 				
 				//consideriamo i potenziali repulsivi dei pesci vicini del banco corrente
 				for (int j=0; j < Oceano[PerceivedSchools[i]].getSchool().size(); j++)
