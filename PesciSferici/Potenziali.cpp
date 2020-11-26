@@ -97,14 +97,14 @@ float RepulsiveForceFishZ(float* PosFish1, float* PosFish2) //pesce 1 crea il po
 }
 
 
-float* RepulsiveForcesFish(float* PosFish1, float* PosFish2) //calcolo delle forze repulsive generate da un pesce FUNZIONA
+void RepulsiveForcesFish(float* PosFish1, float* PosFish2, float *arr) //calcolo delle forze repulsive generate da un pesce FUNZIONA
 																//pesce 1 crea il potenziale, pesce 2 le subisce
 {
 	float r = dist(PosFish1, PosFish2);
-	float Forze[3];
+	//float Forze[3];
 	for (int i = 0; i < 3; i++)
-		Forze[i] = ((3.f) * (PosFish2[i] - PosFish1[i])) / (r * (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale), 4)));
-	return Forze;
+		arr[i] = ((3.f) * (PosFish2[i] - PosFish1[i])) / (r * (pow(abs(r - LUNGHEZZA_PESCE / 2.f - Spazio_Vitale), 4)));
+	//return Forze;
 }
 
 float RepulsivePotenzialFish(float* PosFish1, float* PosFish2) //potenziale, primo pesce crea il potenziale, il secondo lo subisce
@@ -145,21 +145,21 @@ float AttractiveForceSchoolZ(float* PosSchool, float* VelSchool, float* PosFish,
 		+ 2 * (PosSchool[2] - PosFish[2]) / (RSchool * RSchool);
 }
 
-float* AttractiveForcesSchool(float* PosSchool, float* VelSchool, float* PosFish, float RSchool) //Forza vettoriale per il potenziale di banco
+void AttractiveForcesSchool(float* PosSchool, float* VelSchool, float* PosFish, float RSchool, float *arr, int len) //Forza vettoriale per il potenziale di banco
 {
-	float Forzexyz[3];
+	//float Forzexyz[3];
 	float modulV = modul3(VelSchool);
 	/*if (modulV == 0) {
 		modulV = 1;
 	}*/
 	float velposS = ProdottoScalare3(PosSchool, VelSchool);
 	float velposF = ProdottoScalare3(PosFish, VelSchool);
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < len; i++) {
 		
-		Forzexyz[i] = (1 - asimmetry) * 2 * VelSchool[i] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV) //qua capita che modulV sia 0
+		arr[i] = (1 - asimmetry) * 2 * VelSchool[i] * (velposF - velposS) / (RSchool * RSchool * modulV * modulV) //qua capita che modulV sia 0
 			+ 2 * (PosSchool[i] - PosFish[i]) / (RSchool * RSchool);
 	}
-	return Forzexyz;
+	//return Forzexyz;
 }
 
 float AttractivePotenzialSchool(float* PosSchool, float* VelSchool, float* PosFish, float RSchool) //da finire
@@ -190,14 +190,14 @@ float AttractiveForceHoleZ(float* PosFish, float* PosHole)
 	return expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[2] - PosHole[2]) / (DIM_BUCA * DIM_BUCA));
 }
 
-float* AttractiveForcesHole(float* PosFish, float* PosHole) //interazione vettoriale pesce buca, primo argomento pos pesce, secondo pos buca
+void AttractiveForcesHole(float* PosFish, float* PosHole, float* arr) //interazione vettoriale pesce buca, primo argomento pos pesce, secondo pos buca
 {
 	float r = dist(PosFish, PosHole);
-	float Forzexyz[3];
+	//float Forzexyz[3];
 	for (int i = 0; i < 3; i++)
-		Forzexyz[i] = expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[i] - PosHole[i]) / (DIM_BUCA * DIM_BUCA));
+		arr[i] = expf(-(r * r) / (2 * DIM_BUCA * DIM_BUCA)) * (-(PosFish[i] - PosHole[i]) / (DIM_BUCA * DIM_BUCA));
 
-	return Forzexyz;
+	//return Forzexyz;
 }
 
 
@@ -221,9 +221,9 @@ float RepulsiveForceFishZ(Pesce PesceGen, Pesce PesceSub) //il primo pesce gener
 
 
 
-float* RepulsiveForcesFish(Pesce PesceGen, Pesce PesceSub) //il primo pesce genera il potenziale il secondo lo subisce
+void RepulsiveForcesFish(Pesce PesceGen, Pesce PesceSub, float* arr) //il primo pesce genera il potenziale il secondo lo subisce
 {
-	return RepulsiveForcesFish(PesceGen.getPos(), PesceSub.getPos());
+	RepulsiveForcesFish(PesceGen.getPos(), PesceSub.getPos(), arr);
 }
 
 
@@ -239,7 +239,7 @@ float RepulsivePotentialFish(Pesce PesceGen, Pesce PesceSub) //il primo pesce ge
 
 float AttractiveForceSchoolX(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
 {
-	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 1 }, maxR[]{ 0,0,0 };
 	for (int i = 0; i < 3; i++)
 	{
 		for (int k = 0; k < Banco.getSchool().size(); k++)
@@ -262,7 +262,7 @@ float AttractiveForceSchoolX(School Banco, Pesce Fish) //calcola la media della 
 
 float AttractiveForceSchoolY(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
 {
-	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 1 }, maxR[]{ 0,0,0 };
 	for (int i = 0; i < 3; i++)
 	{
 		for (int k = 0; k < Banco.getSchool().size(); k++)
@@ -285,7 +285,7 @@ float AttractiveForceSchoolY(School Banco, Pesce Fish) //calcola la media della 
 
 float AttractiveForceSchoolZ(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
 {
-	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 0 }, maxR[]{ 0,0,0 };
+	float AvgPosSchool[3]{ 0,0,0 }, AvgVelSchool[3]{ 0,0,0 }, r{ 1 }, maxR[]{ 0,0,0 };
 	for (int i = 0; i < 3; i++)
 	{
 		for (int k = 0; k < Banco.getSchool().size(); k++)
@@ -307,12 +307,13 @@ float AttractiveForceSchoolZ(School Banco, Pesce Fish) //calcola la media della 
 }
 
 
-float* AttractiveForcesSchool(School Banco, Pesce Fish) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
+void AttractiveForcesSchool(School Banco, Pesce Fish, float* arr) //calcola la media della posizone dei pesci del banco(centro) e la velocità media poi fa il conto delle dimensioni massime del banco
 {
 	float AvgPosSchool[3] = { 0,0,0 };
 	float AvgVelSchool[3] = { 0,0,0 };
-	float r = 0;
+	float r = 1;
 	float maxR[3] = { 0,0,0 };
+	//float forcesxyz[3];
 	for (int i = 0; i < 3; i++)
 	{
 		//calcola pos e vel media del banco (questa parte è da spostare tra le funzioni del banco)
@@ -331,7 +332,9 @@ float* AttractiveForcesSchool(School Banco, Pesce Fish) //calcola la media della
 		}
 		r = maxR[i] > r ? maxR[i] : r;
 	}
-	return AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r);
+	//AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r)[0];
+	(AvgPosSchool, AvgVelSchool, Fish.getPos(), r, arr, 3);
+	//return forcesxyz;
 }
 
 //##########################
@@ -383,14 +386,14 @@ void SetAccelerazioni(vector<School>& Oceano)
 		{
 			Pesce* Fish = Oceano[a].getSchool()[b];
 			float accTot[3] = { 0.f, 0.f, 0.f };
-			float* forza;
+			float forza[3];
 			vector<int> PerceivedSchools;
 
 			//trova i banchi visti dal pesce
 			for (int i = 0; i < Oceano.size(); i++)
 				for (int k = 0; k < Oceano[i].getSchool().size(); k++)
 					if (a != i || b != k)
-						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < MinDist) //da aggiungere campo visivo (così sono pesci cieci, solo sensori)
+						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < 1000) //da aggiungere campo visivo (così sono pesci cieci, solo sensori)
 						{
 							PerceivedSchools.push_back(i);
 							k = Oceano[i].getSchool().size();
@@ -401,7 +404,7 @@ void SetAccelerazioni(vector<School>& Oceano)
 			{
 				pesoBanco = Oceano[PerceivedSchools[i]].getSchool().size();
 				//potenziali banchi
-				forza = AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish);
+				AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish, forza);
 				for (int u = 0; u < 3; u++)
 					accTot[u] += (forza[u] / massa) * pesoBanco / pesoTot;
 
@@ -410,16 +413,16 @@ void SetAccelerazioni(vector<School>& Oceano)
 					if (a != PerceivedSchools[i] || b != j)
 						if (dist(Fish->getPos(), Oceano[PerceivedSchools[i]].getSchool()[j]->getPos()) < MinDist) //sente solo le repulsioni dei pesci vicini, per risparmiare conti
 						{
-							forza = RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish);
-							for (int u = 0; u < 3; u++)
-								accTot[u] += forza[u] / massa;
+						//RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, forza);
+						for (int u = 0; u < 3; u++)
+							accTot[u] += forza[u] / massa;
 
 
 							//potenziali buche
 							for (int h = 0; h < 8; h++)
 							{
 								float* PosHole = Oceano[PerceivedSchools[i]].getSchool()[j]->getHoles()[h].getPos();
-								forza = AttractiveForcesHole(Fish->getPos(), PosHole);
+								AttractiveForcesHole(Fish->getPos(), PosHole, forza);
 								for (int u = 0; u < 3; u++) 
 									accTot[u] += forza[u] / massa;
 								

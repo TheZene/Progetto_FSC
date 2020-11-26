@@ -87,7 +87,7 @@ School set(&sette);
 School ot(&otto);
 School nov(&nove);
 School die(&dieci);
-vector<School> pozza = {un, du};
+vector<School> pozza = {un, du, tr, qu, cinq, se, set, ot, nov, die};
 float t = 0;
 
 /*void draw_palla(void);
