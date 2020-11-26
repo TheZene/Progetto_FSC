@@ -52,8 +52,8 @@ void Pesce::setTheta(float t) {
 
 void Pesce::Nuota() {
     float v = askModule(vel);
-    //printf("%f ", v);
-    //incremento della posizione e della velocità del pesce
+    cout << "V=" << v << endl;
+    //incremento della posizione e della velocitÃ  del pesce
     for (int k = 0; k < DIMARR; ++k)
     {
         if (v > 5) acc[k] += -pow(vel[k], 3) / (abs(vel[k]) + 0.0000001); //attrito viscoso
