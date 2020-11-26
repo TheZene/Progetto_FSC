@@ -17,7 +17,7 @@ using namespace std;
 
 /*Class: Pesce, descrive un pesce
 *
-* Attributes: 
+* Attributes:
 *	pos: vector delle posizioni, potrebbe essere array
 *	vel: vector delle velocità, potrebbe essere array
 *	acc: vector delle accelerazioni, potrebbe essere array
@@ -49,6 +49,6 @@ public:
 	Hole* getHoles() { return holes; }
 	float getTheta() { return theta; }
 	void Nuota();
-	void NuotainCerchio(float &t, int i);
+	void NuotainCerchio(float& t, int i);
 	float computeTheta();
 };

@@ -57,8 +57,8 @@ float AttractivePotenzialHole(float*, float*); //potenziale dell'interazione pes
 //==========================================
 
 float RepulsiveForceFishX(Pesce, Pesce);  //idee per fare degli overload con pesce invece di posizioni? potrebbe essere comodo
-//float RepulsiveForceFishX(Pesce *, Pesce *); 
-float RepulsiveForceFishY(Pesce, Pesce); 
+//float RepulsiveForceFishX(Pesce *, Pesce *);
+float RepulsiveForceFishY(Pesce, Pesce);
 //float RepulsiveForceFishY(Pesce*, Pesce*);
 float RepulsiveForceFishZ(Pesce, Pesce);
 //float RepulsiveForceFishZ(Pesce*, Pesce*);
@@ -66,8 +66,8 @@ float RepulsiveForceFishZ(Pesce, Pesce);
 float* RepulsiveForcesFish(Pesce, Pesce);
 //float* RepulsiveForcesFish(Pesce*, Pesce*);
 
-float RepulsivePotenzialFish(Pesce, Pesce); 
-//float RepulsivePotenzialFish(Pesce*, Pesce*); 
+float RepulsivePotenzialFish(Pesce, Pesce);
+//float RepulsivePotenzialFish(Pesce*, Pesce*);
 
 
 float AttractiveForceSchoolX(School, Pesce);  //da finire di overloaddare
@@ -98,6 +98,6 @@ float AllForceFishZ(Pesce, Pesce);
 
 float* AllForcesFish(Pesce, Pesce);
 
-#define POTENZIALI 
+#define POTENZIALI
 #endif
 */

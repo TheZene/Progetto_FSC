@@ -19,7 +19,7 @@ private:
 	float Distance;
 	int type;
 	float force;
-	
+
 public:
 	float* getPos() { return pos; }
 	float* getCol() { return color; }
