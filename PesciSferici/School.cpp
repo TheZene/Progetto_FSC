@@ -96,7 +96,7 @@ void Merge(vector<School>& Oceano)
 			Oceano.erase(Oceano.begin() + t);
 		}*/
 
-	for (int a = 0; a < Oceano.size(); a++)
+	for (int a = 0; a < Oceano.size(); a++) {
 		for (int b = 0; b < Oceano[a].getSchool().size(); b++)
 		{
 			Pesce* Fish = Oceano[a].getSchool()[b];
@@ -109,6 +109,8 @@ void Merge(vector<School>& Oceano)
 							Oceano.erase(Oceano.begin() + i);
 						}
 		}
+	}
+
 }
 
 
