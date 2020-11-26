@@ -21,6 +21,7 @@ private:
 	int handle_key(int event, int key);
 public:
 	double ruotaX, ruotaY, ruotaZ, zoom;
+	double moveUp, moveSide;
 	int prevx = 0;
 	int prevy = 0;
 	int  handle(int);

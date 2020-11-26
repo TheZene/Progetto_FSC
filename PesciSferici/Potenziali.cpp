@@ -333,7 +333,7 @@ void AttractiveForcesSchool(School Banco, Pesce Fish, float* arr) //calcola la m
 		r = maxR[i] > r ? maxR[i] : r;
 	}
 	//AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r)[0];
-	(AvgPosSchool, AvgVelSchool, Fish.getPos(), r, arr, 3);
+	AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r, arr, 3);
 	//return forcesxyz;
 }
 

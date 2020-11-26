@@ -18,5 +18,6 @@ void idle_cb(void*)
 int main(int argc, char** argv) {
 	CreateMyWindow();
 	Fl::add_timeout(1 / 120, idle_cb);
+//	Fl::add_idle(idle_cb, 0);
 	return Fl::run();
 }

@@ -34,26 +34,26 @@ void School::computeAVGDir() {
 //ossia calcolare la lunghezza del banco (EZ) e calcolare l'angolo della direzione media del banco (?)
 //come se calcola l'angolo, in base a cosa? Che poi in realtà sono due angoli, uno tra x,z e uno tra x,y o z,y dipende
 
-
+void draw_direction(float x, float y, float z) {
+	glColor3f(1, 0, 0);
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glVertex3f(0, 0, 0); glVertex3f(x, y, z);
+	glEnd();
+}
 
 void School::DrawSchool()
 {	
-	float avgcentro[3];
+	float avgdir[3] = { 0,0,0 };
 	for (int i = 0; i < school.size(); i++)
 	{
-		for (int j = 0; j < 3; j++)
-			avgcentro[j] += school[i]->getPos()[j];
-		for (int j = 0; j < 3; j++)
-			avgcentro[j] /= school.size();
 		school[i]->Nuota();
 		glPushMatrix();
 		glTranslated(school[i]->getPos()[0], school[i]->getPos()[1], school[i]->getPos()[2]);
 		glCallList(SFERA);
 		glPopMatrix();
-		
-		//glLoadIdentity();
-		//gluLookAt(60, 60, 60, avgcentro[0], avgcentro[1], avgcentro[2], 0, 1, 0);
 	}
+
 }
 
 

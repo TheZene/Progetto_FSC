@@ -7,7 +7,6 @@
 #include <FL/Enumerations.H>
 
 #include "Frame.h"
-#include "Pesce.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -23,7 +22,8 @@ char* foo;
 int flag = 0;
 
 void Frame::init(void) {
-
+    moveUp = 0;
+    moveSide = 0;
     gl_font(FL_HELVETICA_BOLD, 16);
     GLUquadricObj* palla;
     palla = gluNewQuadric();
@@ -103,7 +103,7 @@ int Frame::handle(int event) {
 
     switch (event) {
     case FL_PUSH:
-        //return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
+        return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_RELEASE:
     case FL_DRAG:
         return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
@@ -132,25 +132,21 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
         // coordinates where it occurred.
         if (event == FL_PUSH) {
             //inizializzo le posizioni in cui clicko
-            prevx = x;
-            prevy = y;
+
         }
         else if (event == FL_DRAG) {
             //
-            spostamentox = prevx - x;
-            spostamentoy = prevy - y;
             /**/
         }
         else if (event == FL_RELEASE) {
-            
+
         }
-        break;
-    case 2: // MMB
+    case 3:
         ret = 1;
         // Based on the action, print the action and
         // coordinates where it occurred.
         if (event == FL_PUSH) {
-
+            //inizializzo le posizioni in cui clicko
         }
         else if (event == FL_DRAG) {
 
@@ -158,21 +154,6 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
         else if (event == FL_RELEASE) {
 
         }
-        break;
-    case 3: // RMB
-        ret = 1;
-        // Based on the action, print the action and
-        // coordinates where it occurred.
-        if (event == FL_PUSH) {
-
-        }
-        else if (event == FL_DRAG) {
-
-        }
-        else if (event == FL_RELEASE) {
-
-        }
-        break;
     }
     return ret;
 }
@@ -180,28 +161,24 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
 int Frame::handle_key(int event, int key) {
     switch (key) {
     case 's':  //label("letter c was depressed");
-        glRotatef(-4, 1, 0, 0);
-        damage(1);
-        return 1;
-    case 'q':  //label("letter c was depressed");
-        glRotatef(-4, 0, 1, 0);
-        damage(1);
+        moveUp++;
+        glLoadIdentity();
+        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
         return 1;
     case 'w':  //label("letter c was depressed");
-        glRotatef(4, 2, 0, 0);
-        damage(1);
-        return 1;
-    case 'e':  //label("letter c was depressed");
-        glRotatef(4, 0, 1, 0);
-        damage(1);
+        moveUp--;
+        glLoadIdentity();
+        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
         return 1;
     case 'd':  //label("letter c was depressed");
-        glRotatef(4, 0, 0, 1);
-        damage(1);
+        moveSide++;
+        glLoadIdentity();
+        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
         return 1;
     case 'a':  //label("letter c was depressed");
-        glRotatef(-4, 0, 0, 1);
-        damage(1);
+        moveSide--;
+        glLoadIdentity();
+        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
         return 1;
     default:  //label("Nothing to do!");
         damage(1);
