@@ -404,7 +404,6 @@ void SetAccelerazioni(vector<School>& Oceano)
 				forza = AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish);
 				for (int u = 0; u < 3; u++)
 					accTot[u] += (forza[u] / massa) * pesoBanco / pesoTot;
-
 				//consideriamo i potenziali repulsivi dei pesci vicini del banco corrente
 				for (int j = 0; j < Oceano[PerceivedSchools[i]].getSchool().size(); j++)
 					if (a != PerceivedSchools[i] || b != j)
