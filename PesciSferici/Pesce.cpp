@@ -52,7 +52,6 @@ void Pesce::setTheta(float t) {
 
 void Pesce::Nuota() {
     float v = askModule(vel);
-    cout << "V=" << v << endl;
     //incremento della posizione e della velocità del pesce
     for (int k = 0; k < DIMARR; ++k)
     {

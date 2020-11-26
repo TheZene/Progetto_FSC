@@ -89,7 +89,7 @@ void draw_pesce() {
     //ottengo il banco di pesci
     s->getSchool();
     //qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
-    //s->computeAVGDir();
+    s->computeAVGDir();
 
     //qua disegno
     for (int i = 0; i < s->getSchool().size(); i++) {
@@ -110,7 +110,7 @@ void draw_pesce() {
     draw_linea();
     glPopMatrix();
     glLoadIdentity();
-    gluLookAt(s->getCentro()[0], s->getCentro()[1], 60, s->getCentro()[0], s->getCentro()[1], s->getCentro()[2], 0, 1, 0);
+    gluLookAt(s->getCentro()[0], s->getCentro()[1], -20, s->getCentro()[0], s->getCentro()[1], 0, 0, 1, 0);
 }
 
 

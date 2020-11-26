@@ -78,7 +78,7 @@ void Frame::draw() {
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
         glLoadIdentity();                                      // Reset The View
-        gluLookAt(0.0, 0.0, 150, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+        gluLookAt(0.0, 0.0, 100, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -108,14 +108,11 @@ int Frame::handle(int event) {
     case FL_DRAG:
         return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_MOVE:
-        return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
+        //return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
+        return 1;
     case FL_FOCUS:
-        label("Gained focus");
-        damage(1);
         return 1;
     case FL_UNFOCUS:
-        label("Lost focus");
-        damage(1);
         return 1;
     default:
         return Fl_Window::handle(event);

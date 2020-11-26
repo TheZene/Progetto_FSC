@@ -15,30 +15,21 @@ School::School(vector<Pesce*> s) {
 void School::setDir(float* arr) {
 	for (int i = 0; i < 3; i++) dir[i] = arr[i];
 }
-/*
+
 void School::computeAVGDir() {
 	int i = 0;
-	float totV[] = { 0.0, 0.0, 0.0 };
-	float totP[] = { 0.0, 0.0, 0.0 };
-	resetMinMax();
-	float valP = 0;
-	float valV = 0.0;
-	for (i = 0; i < school.size(); i++) {
-		for (int j = 0; j < DIMARR; j++) {
-			valV = school[i]->getVel()[j];
-			valP = school[i]->getPos()[j];
-			totV[j] += valV;
-			totP[j] += valP;
-			if (max[j] < valP) max[j] = valP;
-			if (min[j] > valP) min[j] = valP;
-		}
+	float avgcentro[3];
+	for (int j = 0; j < school.size(); j++) {
+		for (i = 0; i < 3; i++)
+			avgcentro[i] += school[j]->getPos()[i];
 	}
-	theta = atan2f(totV[1], totV[0]);
-	for (int i = 0; i < DIMARR; i++)
-		//dimensions[i] = max[i] - min[i];
-		centro[i] = totP[i] / school.size();
+	for (i = 0; i < 3; i++) {
+		avgcentro[i] /= school.size();
+		//printf("%f ", avgcentro[i]);
+	}
+	printf("\n");
 }
-*/
+
 //TODO: calcolare l'asse per centrare il banco di pesci
 //ossia calcolare la lunghezza del banco (EZ) e calcolare l'angolo della direzione media del banco (?)
 //come se calcola l'angolo, in base a cosa? Che poi in realtà sono due angoli, uno tra x,z e uno tra x,y o z,y dipende
@@ -46,14 +37,22 @@ void School::computeAVGDir() {
 
 
 void School::DrawSchool()
-{
+{	
+	float avgcentro[3];
 	for (int i = 0; i < school.size(); i++)
 	{
+		for (int j = 0; j < 3; j++)
+			avgcentro[j] += school[i]->getPos()[j];
+		for (int j = 0; j < 3; j++)
+			avgcentro[j] /= school.size();
 		school[i]->Nuota();
 		glPushMatrix();
 		glTranslated(school[i]->getPos()[0], school[i]->getPos()[1], school[i]->getPos()[2]);
 		glCallList(SFERA);
 		glPopMatrix();
+		
+		//glLoadIdentity();
+		//gluLookAt(60, 60, 60, avgcentro[0], avgcentro[1], avgcentro[2], 0, 1, 0);
 	}
 }
 
