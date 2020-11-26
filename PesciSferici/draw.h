@@ -37,8 +37,8 @@ float t = 0;*/
 float posizione1[3] = { 0  ,10, .0 };
 float velocità1[3] = { 0, -0.7, 0. };
 
-float posizione2[3] = { 0, -10, 0 };
-float velocità2[3] = { 0., 0.7, 0. };
+float posizione2[3] = { 0, 0, 0 };
+float velocità2[3] = { 0, 0.7, 0 };
 
 float posizione3[3] = { +3, -3, -0. };
 float velocità3[3] = { -0.3, 0.2, 0. };
@@ -87,7 +87,7 @@ School set(&sette);
 School ot(&otto);
 School nov(&nove);
 School die(&dieci);
-vector<School> pozza = { un, du, tr, qu, cinq, se, set, ot, nov, die};
+vector<School> pozza = {un, du};
 float t = 0;
 
 /*void draw_palla(void);

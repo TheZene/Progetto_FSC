@@ -15,7 +15,7 @@ School::School(vector<Pesce*> s) {
 void School::setDir(float* arr) {
 	for (int i = 0; i < 3; i++) dir[i] = arr[i];
 }
-
+/*
 void School::computeAVGDir() {
 	int i = 0;
 	float totV[] = { 0.0, 0.0, 0.0 };
@@ -38,7 +38,7 @@ void School::computeAVGDir() {
 		//dimensions[i] = max[i] - min[i];
 		centro[i] = totP[i] / school.size();
 }
-
+*/
 //TODO: calcolare l'asse per centrare il banco di pesci
 //ossia calcolare la lunghezza del banco (EZ) e calcolare l'angolo della direzione media del banco (?)
 //come se calcola l'angolo, in base a cosa? Che poi in realtà sono due angoli, uno tra x,z e uno tra x,y o z,y dipende
@@ -117,8 +117,9 @@ void DrawOcean(vector<School>& Oceano)
 {
 	Merge(Oceano);
 	SetAccelerazioni(Oceano);
-	for (int i = 0; i < Oceano.size(); i++)
+	for (int i = 0; i < Oceano.size(); i++) {
 		Oceano[i].DrawSchool();
+	}
 }
 
 

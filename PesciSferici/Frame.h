@@ -13,7 +13,6 @@
 #define SFERA 44
 #define BUCA 62
 
-
 class Frame : public Fl_Gl_Window {
 private:
 	void draw();

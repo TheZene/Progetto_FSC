@@ -89,7 +89,7 @@ void draw_pesce() {
     //ottengo il banco di pesci
     s->getSchool();
     //qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
-    s->computeAVGDir();
+    //s->computeAVGDir();
 
     //qua disegno
     for (int i = 0; i < s->getSchool().size(); i++) {

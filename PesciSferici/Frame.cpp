@@ -78,7 +78,7 @@ void Frame::draw() {
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
         glLoadIdentity();                                      // Reset The View
-        gluLookAt(0.0, 0.0, 120, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+        gluLookAt(0.0, 0.0, 150, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -142,26 +142,10 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
             //
             spostamentox = prevx - x;
             spostamentoy = prevy - y;
-            //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
-            if (!flag) {
-                glPushMatrix();
-                flag = 1;
-            }
-            glRotatef(-spostamentox, 0, 1, 0);
-            glRotatef(-spostamentoy, 1, 0, 0);
-
-            prevx = x;
-            prevy = y;
-
             /**/
         }
         else if (event == FL_RELEASE) {
-            glPopMatrix();
-            flag = 0;
-            spostamentox = prevx - x;
-            spostamentoy = prevy - y;
-            glRotatef(-spostamentox, 0, 1, 0);
-            glRotatef(-spostamentoy, 1, 0, 0);
+            
         }
         break;
     case 2: // MMB

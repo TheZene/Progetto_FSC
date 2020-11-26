@@ -37,7 +37,7 @@ public:
 	void setDir(float* arr);
 	void addPesce(Pesce* p) { school.push_back(p); }
 	vector<Pesce*> getSchool() { return school; }
-	void computeAVGDir();
+	//void computeAVGDir();
 	void Merge(School S);
 	vector<School> split();
 	void DrawSchool();
