@@ -13,6 +13,7 @@
 #define SFERA 44
 #define BUCA 62
 
+
 class Frame : public Fl_Gl_Window {
 private:
 	void draw();
@@ -21,7 +22,7 @@ private:
 	int handle_key(int event, int key);
 public:
 	double ruotaX, ruotaY, ruotaZ, zoom;
-	double moveUp, moveSide;
+	double moveUp, moveSide, scale;
 	int prevx = 0;
 	int prevy = 0;
 	int  handle(int);

@@ -5,12 +5,9 @@
 #include <math.h>
 #include "School.h"
 #include "Pesce.h"
+#include "define.h"
 
-int j = 0;
-bool init = false;
-School* s = new School();
-float lastTheta = 0;
-
+void initOcean();
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
 void draw_scene(void);
 void draw_pesce2(void);
@@ -33,8 +30,15 @@ Pesce pesciolini[2] = { fermo, collidente };
 float t = 0;*/
 
 
+float pos[FISHNUMBER][3];
+float vel[FISHNUMBER][3];
+Pesce p[FISHNUMBER];
+School s[SCHOOLNUMBER];
+vector<School> pozza;
+
+/*
 //prova per potenziale repulsivo+attrattivo.
-float posizione1[3] = { 0  ,10, .0 };
+float posizione1[3] = { 0, 10, .0 };
 float vel1[3] = { 0, -0.7, 0. };
 float posizione2[3] = {0, -10, 0 };
 float vel2[3] = { 0., 0.7, 0. };
@@ -87,8 +91,7 @@ School set(&sette);
 School ot(&otto);
 School nov(&nove);
 School die(&dieci);
-vector<School> pozza = {un, du, tr, qu, cinq, se, set, ot, nov, die};
-float t = 0;
+vector<School> pozza = { un, du, tr, qu, cinq, se, set, ot, nov, die };*/
 
 /*void draw_palla(void);
 void draw_tetra(void);*/

@@ -9,9 +9,14 @@
 
 #include "draw.h"
 #include "Frame.h"
+#include "utilities.h"
+#include "Potenziali.h"
 
-extern void DrawOcean(std::vector<School>& Oceano);
-
+/*extern float pos[10][3];
+extern float vel[10][3];
+extern Pesce p[10];
+extern School s[10];
+extern vector<School> pozza;*/
 //-------------------------------------------------------------------------------------------------
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3)
 {
@@ -23,9 +28,42 @@ void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float
     nx /= nn; ny /= nn; nz /= nn;
     glNormal3f(nx, ny, nz);
 }
+void DrawOcean(vector<School>& Oceano)
+{
+    Merge(Oceano);
+    SetAccelerazioni(Oceano);
+    for (int i = 0; i < Oceano.size(); i++) {
+        Oceano[i].DrawSchool();
+    }
+}
 // ********************************************************************************************************
-void draw_scene(void) {
+void initOcean() {
+    //prova per potenziale repulsivo+attrattivo.
+    float x, y, z, vx, vy, vz;
+    x = y = z = vx = vy = vz= 0;
+    for (int i = 0; i < FISHNUMBER; i++) {
+        pos[i][0] = x;
+        pos[i][1] = y;
+        pos[i][2] = z;
+        x += 2;
+        y += 2;
+        srand(time(NULL));
+        vx = rand() % 10;
+        vy = rand() % 10;
+        vel[i][0] = vx;
+        vel[i][1] = vy;
+        vel[i][2] = 0;
+        p[i] = Pesce(pos[i], vel[i]);
+    }
+   
+    for (int i = 0; i < SCHOOLNUMBER; i++) {
+        s[i] = School(&p[i]);
+        pozza.push_back(s[i]);
+    }
+}
 
+
+void draw_scene(void) {
     DrawOcean(pozza);
 
     // ********************************************************************************************************

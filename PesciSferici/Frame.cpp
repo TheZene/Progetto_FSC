@@ -16,6 +16,7 @@
 
 #define LIGHT
 
+extern void initOcean();
 extern void draw_scene();
 extern void stampa(const char* messaggio);
 char* foo;
@@ -24,6 +25,7 @@ int flag = 0;
 void Frame::init(void) {
     moveUp = 0;
     moveSide = 0;
+    scale = 1;
     gl_font(FL_HELVETICA_BOLD, 16);
     GLUquadricObj* palla;
     palla = gluNewQuadric();
@@ -43,7 +45,7 @@ void Frame::init(void) {
     glNewList(BUCA, GL_COMPILE);
     gluSphere(buca, 0.1, 30, 30);
     glEndList();
-
+    initOcean();
 }
 //-----------------------------------------------------------------------------------------------
 
@@ -78,7 +80,7 @@ void Frame::draw() {
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
         glLoadIdentity();                                      // Reset The View
-        gluLookAt(0.0, 0.0, 100, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+        gluLookAt(0.0, 0.0, 60, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -161,24 +163,40 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
 int Frame::handle_key(int event, int key) {
     switch (key) {
     case 's':  //label("letter c was depressed");
-        moveUp++;
-        glLoadIdentity();
-        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
-        return 1;
-    case 'w':  //label("letter c was depressed");
         moveUp--;
         glLoadIdentity();
-        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        gluLookAt(0.0+scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
+        return 1;
+    case 'w':  //label("letter c was depressed");
+        moveUp++;
+        glLoadIdentity();
+        gluLookAt(0.0+scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     case 'd':  //label("letter c was depressed");
         moveSide++;
         glLoadIdentity();
-        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        gluLookAt(0.0 + scale, 0.0 +scale , 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     case 'a':  //label("letter c was depressed");
         moveSide--;
         glLoadIdentity();
-        gluLookAt(0.0, 0.0, 100, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        gluLookAt(0.0 + scale, 0.0 +scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
+        return 1;
+    case 'x':
+        scale+=0.1;
+        glLoadIdentity();
+        gluLookAt(0.0 +scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
+        return 1;
+    case 'z':
+        scale-=0.1;
+        glLoadIdentity();
+        gluLookAt(0.0+scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     default:  //label("Nothing to do!");
         damage(1);

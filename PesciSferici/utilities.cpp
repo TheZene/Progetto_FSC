@@ -75,7 +75,7 @@ void Merge(vector<School>& Oceano)
 			Oceano.erase(Oceano.begin() + t);
 		}*/
 	//sta cosa va rifatta, perche' potrebbe succedere che un pesce in un banco si stacchi dal banco per unirsi ad un altro mentre altri pesci no
-	//quindi si deve fare magari che se piu' della meta' del banco vede il nuovo banco allora i due banchi si uniscono, altrimenti no.
+	//quindi si deve fare magari che se piu' della meta' del banco vede il 
 	for (int a = 0; a < Oceano.size(); a++) {
 		for (int b = 0; b < Oceano[a].getSchool().size(); b++)
 		{
