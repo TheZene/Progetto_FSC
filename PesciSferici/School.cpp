@@ -63,6 +63,7 @@ void School::DrawSchool()
 		//qua calcolo la direzione del banco media (in teoria pesata perche' chi sta avanti comanda)
 		computeAVGDir();
 	}
+	cout << "dist travld " << askModule(mid) << endl;
 	glPushMatrix();
 	glTranslatef(mid[0], mid[1], mid[2]);
 	glCallList(CENTRO);
@@ -125,8 +126,15 @@ void DrawOcean(vector<School>& Oceano)
 }
 
 
+void School::RemoveFish (int b)
+{
+	school.erase(school.begin() + b);
+}
 
-
+void School::InsertFish(Fish &fish, int b)
+{
+	school.insert(school.begin() + b, &fish);
+}
 
 
 

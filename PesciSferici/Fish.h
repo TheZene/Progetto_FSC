@@ -7,7 +7,6 @@
 #include <math.h>
 #include "define.h"
 
-
 #pragma once
 //#define L 5
 //#define SFERETTA 7

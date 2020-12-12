@@ -194,6 +194,18 @@ float* AttractiveForcesHole(float* PosFish, float* holePos) //interazione vettor
 	return Forzexyz;
 }
 
+//##############################
+//forza riscalata, probabilmente fatta maluccio ahah
+
+float* AttractiveForcesHoleWeak(float* PosFish, float* holePos) //interazione vettoriale pesce buca, primo argomento pos pesce, secondo pos buca
+{
+	float r = dist(PosFish, holePos);
+	float Forzexyz[3];
+	for (int i = 0; i < 3; i++)
+		Forzexyz[i] = 0.1f*expf(-(r * r) / (2 * HOLE_DIM * HOLE_DIM)) * (-(PosFish[i] - holePos[i]) / (HOLE_DIM * HOLE_DIM));
+
+	return Forzexyz;
+}
 
 //##########################
 //Forze repulsive per pesci (overload)
@@ -357,6 +369,20 @@ float* AllForcesFish(Fish FishGen, Fish FishSub)
 	return 0;
 }
 
+//############################################
+//test Potenziale centrale
+
+float* CentralForce(float* PosFish,float* PosSchool)
+{
+	float r = dist(PosFish, PosSchool);
+	float forzexyz[]{ 0,0,0 };
+	for (int i = 0; i < 3; i++)
+	{
+		forzexyz[i] =  2*(PosSchool[i] - PosFish[i]);
+	}
+	return forzexyz;
+}
+
 int Weight(vector<School>& Oceano)
 {
 	int weight = 0;
@@ -393,12 +419,15 @@ void setAccelerations(vector<School> &Oceano)
 			{
 				weightSchool = Oceano[PerceivedSchools[i]].getSchool().size();
 				//potenziali banchi
-				force = AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish);
+				//if (PerceivedSchools[i]==a) Oceano[PerceivedSchools[i]].RemoveFish(b);
+				//force = AttractiveForcesSchool(Oceano[PerceivedSchools[i]], *Fish);
+				//if (PerceivedSchools[i]==a) Oceano[PerceivedSchools[i]].InsertFish(*Fish, b);
+				force = CentralForce(Fish->getPos(), Oceano[PerceivedSchools[i]].getMid());
 				for (int u = 0; u < 3; u++)
 					totAcc[u] += (force[u] / MASS)*weightSchool/weightTot;
 
-				cout << "accTotx= " <<Fish->getVel()[0]<<endl;
-				cout << "Vtotx= " << Fish->getVel()[0] << endl;
+				//cout << "accTotx= " <<Fish->getVel()[0]<<endl;
+				//cout << "Vtotx= " << Fish->getVel()[0] << endl;
 				
 				//consideriamo i potenziali repulsivi dei pesci vicini del banco corrente
 				for (int j=0; j < Oceano[PerceivedSchools[i]].getSchool().size(); j++)
@@ -414,7 +443,11 @@ void setAccelerations(vector<School> &Oceano)
 							for (int h = 0; h < 8; h++)
 							{
 								float* holePos = Oceano[PerceivedSchools[i]].getSchool()[j]->getHoles()[h].getPos();
-								force = AttractiveForcesHole(Fish->getPos(), holePos);
+								//if (h < 2)
+								//{
+									force = AttractiveForcesHole(Fish->getPos(), holePos);
+								//}
+								//else { force = AttractiveForcesHoleWeak(Fish->getPos(), holePos); }
 								for (int u = 0; u < 3; u++)
 									totAcc[u] += force[u] / MASS;
 							}
