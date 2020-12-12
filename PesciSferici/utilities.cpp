@@ -19,12 +19,11 @@ float modul3(float* Anyvect)//calcola il modulo
 	return a;
 }
 
-float* FindDir(float* Anyvect) // trova theta, phi per le coordinate sferiche, il primo risultato e' l'angolo sul piano, il secondo e' l'angolo con le zeta
+void FindDir(float* Anyvect, float* Directions) // trova theta, phi per le coordinate sferiche, il primo risultato e' l'angolo sul piano, il secondo e' l'angolo con le zeta
 {								//se siamo in 0,0,0 da {0,0}
 	float a = modul3(Anyvect);
-	float Directions[2]{ 0,0 };
 	if (a > -0.00001f && a < 0.00001f)
-		return Directions;
+		Directions[0] = Directions[1] = 0;
 	if (Anyvect[0] >= -0.00001f && Anyvect[1] <= 0.00001f)
 	{
 		if (Anyvect[1] > 0)
@@ -47,7 +46,6 @@ float* FindDir(float* Anyvect) // trova theta, phi per le coordinate sferiche, i
 			Directions[0] = (atanf(Anyvect[1] / Anyvect[0]) + PIGRECO);
 	}
 	Directions[1] = acosf(Anyvect[2] / a);
-	return Directions;
 }
 
 float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
@@ -59,27 +57,31 @@ float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
 }
 
 
+
+/*void mySplit(vector<School>& Oceano) {
+	int j = 0;
+	for (int i = 0; i < Oceano.size(); i++)
+		if (Oceano[i].getSchool().size() > 1) {
+			for (j = 0; j < Oceano[i].getSchool().size() - 1; j++) {
+				Pesce* fish = Oceano[i].getSchool().at(j);
+				if (dist(fish->getPos(), Oceano[i].getSchool()[j + 1]->getPos()) <= MinDist)
+					break;
+			}
+			if (j != Oceano[i].getSchool().size()) {
+				Oceano[i].getSchool().erase
+			}
+		}
+}*/
+
+
 void Merge(vector<School>& Oceano)
 {
-	//splitting da perfezionare! (non essenziale)
-
-	/*vector<School> split;
-	for (int t=0; t<Oceano.size(); t++)
-		if(Oceano[t].getSchool().size()>1)
-		{
-			//splitto il banco in tanti banchi singoletti e li aggiungo a Oceano
-			split = Oceano[t].split();
-			for (int o = 0; 0 < split.size(); o++)
-				Oceano.push_back(split[0]);
-			//elimino il banco
-			Oceano.erase(Oceano.begin() + t);
-		}*/
 	//sta cosa va rifatta, perche' potrebbe succedere che un pesce in un banco si stacchi dal banco per unirsi ad un altro mentre altri pesci no
 	//quindi si deve fare magari che se piu' della meta' del banco vede il 
 	for (int a = 0; a < Oceano.size(); a++) {
 		for (int b = 0; b < Oceano[a].getSchool().size(); b++)
 		{
-			Pesce* fish = Oceano[a].getSchool()[b];
+			Pesce* fish = Oceano[a].getSchool().at(b);
 			for (int i = 0; i < Oceano.size(); i++)
 				if (a != i)
 					for (int k = 0; k < Oceano[i].getSchool().size(); k++)
