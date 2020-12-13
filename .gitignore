@@ -1,0 +1,4 @@
+*
+/PesciSferici/*
+!/PesciSferici/*.cpp
+!/PesciSferici/*.h
