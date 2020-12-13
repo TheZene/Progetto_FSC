@@ -115,6 +115,7 @@ void Merge(vector<School> &Oceano)
 
 void DrawOcean(vector<School>& Oceano)
 {
+	//cout << "numero banchi= " << Oceano.size()<<endl;
 	Merge(Oceano);
 	SetAccelerazioni(Oceano);
 	for (int i = 0; i < Oceano.size(); i++)

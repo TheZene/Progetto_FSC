@@ -116,16 +116,18 @@ void draw_pesce() {
 
 
 //pesce con moto circolare
-/*void draw_pesce2(void) {
-    int i = 0;
+void draw_pesce2(void) {
+    int i = 1;
     //i=0->ruta su piano xz i=1->ruota su piano xy, altri valori->bohhh
     cerchio.NuotainCerchio(t, i);
     //grafica del pesce
     glPushMatrix();
     glTranslated(cerchio.getPos()[0], cerchio.getPos()[1], cerchio.getPos()[2]);
+    //glTranslated(0, 0, 0);
+
     glCallList(SFERA);
     glPopMatrix();
-}*/
+}
 //pesce con repulsione
 /*void draw_pesce3(void) {
     //per vedere esplodere velocit� attivare e mettere posizione e velocit� del pesciolini[0] a 0 e silenziare pesciolino[0].setAcc
@@ -166,12 +168,12 @@ void draw_pesce() {
 //pesce con drawOcean
 void draw_pesce5(void) {
 
-    DrawOcean(pozza);
+    //DrawOcean(pozza);
 }
 // ********************************************************************************************************
 void draw_scene(void) {
 
-    draw_pesce5();
+    draw_pesce2();
 
 // ********************************************************************************************************
 /*void draw_scene(void) {
