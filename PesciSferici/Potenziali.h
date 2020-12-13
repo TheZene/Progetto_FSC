@@ -1,10 +1,4 @@
-#pragma once
-#ifdef PIGRECO
 
-#else
-#define PIGRECO 3.141592f
-
-#endif
 
 
 #ifdef POTENZIALI
@@ -17,11 +11,6 @@
 #include "define.h"
 #endif
 /*
-float dist(float*, float*); //calcolo distanza tra due pesci
-float modul3(float*); //modulo 3 d
-float* FindDir(float*); //trova angoli delle coordinate sferiche
-float ProdottoScalare3(float*, float*);//prodotto scalare 3d
-
 //==========================================
 //Forze e potenziali con posizioni
 //==========================================
@@ -101,3 +90,4 @@ float* AllForcesFish(Pesce, Pesce);
 #define POTENZIALI
 #endif
 */
+void SetAccelerazioni(vector<School>& Oceano);

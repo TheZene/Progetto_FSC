@@ -1,10 +1,6 @@
 #include "School.h"
 
 
-extern float dist(float*, float*); //calcolo distanza tra due pesci
-extern void SetAccelerazioni(vector<School>& Oceano);
-
-
 
 School::School(vector<Pesce*> s) {
 	for (int i = 0; i < s.size(); i++)
@@ -18,13 +14,13 @@ void School::setDir(float* arr) {
 
 void School::computeAVGDir() {
 	int i = 0;
-	float avgcentro[3];
+	float avgcentro[3] = { 0,0,0 };
 	for (int j = 0; j < school.size(); j++) {
 		for (i = 0; i < 3; i++)
 			avgcentro[i] += school[j]->getPos()[i];
 	}
 	for (i = 0; i < 3; i++) {
-		avgcentro[i] /= school.size();
+		avgcentro[i] = avgcentro[i] / school.size();
 		//printf("%f ", avgcentro[i]);
 	}
 	printf("\n");
@@ -56,12 +52,6 @@ void School::DrawSchool()
 
 }
 
-
-
-
-
-
-
 void School::Merge(School S)
 {
 	for (int i = 0; i < S.getSchool().size(); i++)
@@ -77,51 +67,6 @@ vector<School> School::split()
 }
 
 
-
-
-void Merge(vector<School>& Oceano)
-{
-	//splitting da perfezionare! (non essenziale)
-
-	/*vector<School> split;
-	for (int t=0; t<Oceano.size(); t++)
-		if(Oceano[t].getSchool().size()>1)
-		{
-			//splitto il banco in tanti banchi singoletti e li aggiungo a Oceano
-			split = Oceano[t].split();
-			for (int o = 0; 0 < split.size(); o++)
-				Oceano.push_back(split[0]);
-			//elimino il banco
-			Oceano.erase(Oceano.begin() + t);
-		}*/
-
-	for (int a = 0; a < Oceano.size(); a++) {
-		for (int b = 0; b < Oceano[a].getSchool().size(); b++)
-		{
-			Pesce* Fish = Oceano[a].getSchool()[b];
-			for (int i = 0; i < Oceano.size(); i++)
-				if (a != i)
-					for (int k = 0; k < Oceano[i].getSchool().size(); k++)
-						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < MinDist)
-						{
-							Oceano[a].Merge(Oceano[i]);
-							Oceano.erase(Oceano.begin() + i);
-						}
-		}
-	}
-
-}
-
-
-
-void DrawOcean(vector<School>& Oceano)
-{
-	Merge(Oceano);
-	SetAccelerazioni(Oceano);
-	for (int i = 0; i < Oceano.size(); i++) {
-		Oceano[i].DrawSchool();
-	}
-}
 
 
 

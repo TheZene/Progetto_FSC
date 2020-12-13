@@ -42,10 +42,4 @@ public:
 	vector<School> split();
 	void DrawSchool();
 	void DrawOcean(vector<School>& Oceano);
-	void setCentro(float* mid) { centro = mid; }
-	float* getCentro() { return centro; }
-	float getTheta() { return theta; }
-	void resetMinMax() { for (int i = 0; i < DIMARR; i++) { min[i] = FLT_MAX; max[i] = -FLT_MAX; } }
-	float* getMin() { return min; }
-	float* getMax() { return max; }
 };

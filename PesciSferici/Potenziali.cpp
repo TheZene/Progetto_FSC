@@ -1,4 +1,5 @@
 #include "Potenziali.h"
+#include "utilities.h"
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -12,63 +13,6 @@ float asimmetry = 0.2f; //fattore di asimettria banco
 
 
 
-float dist(float* pos1, float* pos2) //calcolo della distanza tra due punti FUNZIONA 
-{
-	float a = 0;
-	for (int i = 0; i < 3; i++)
-		a += ((pos1[i] - pos2[i]) * (pos1[i] - pos2[i]));
-	a = sqrtf(a);
-	return a;
-}
-
-float modul3(float* Anyvect)//calcola il modulo
-{
-	float a = 0;
-	for (int i = 0; i < 3; i++) {
-		a += (Anyvect[i] * Anyvect[i]);
-	}
-	a = sqrtf(a);
-	return a;
-}
-
-float* FindDir(float* Anyvect) // trova theta, phi per le coordinate sferiche, il primo risultato e' l'angolo sul piano, il secondo e' l'angolo con le zeta
-{								//se siamo in 0,0,0 da {0,0}
-	float a = modul3(Anyvect);
-	float Directions[2]{ 0,0 };
-	if (a > -0.00001f && a < 0.00001f)
-		return Directions;
-	if (Anyvect[0] >= -0.00001f && Anyvect[1] <= 0.00001f)
-	{
-		if (Anyvect[1] > 0)
-			Directions[0] = PIGRECO / 2.f;
-		if (Anyvect[0] <= 0)
-			Directions[0] = 3.f * PIGRECO / 2.f;
-	}
-	if (Anyvect[0] > 0.00001f)
-	{
-		if (Anyvect[1] >= 0)
-			Directions[0] = atanf(Anyvect[1] / Anyvect[0]);
-		if (Anyvect[1] < 0)
-			Directions[0] = (atanf(Anyvect[1] / Anyvect[0]) + 2 * PIGRECO);
-	}
-	if (Anyvect[0] < -0.00001f)
-	{
-		if (Anyvect[1] >= 0)
-			Directions[0] = (atanf(Anyvect[1] / Anyvect[0]) + 2 * PIGRECO);
-		if (Anyvect[1] < 0)
-			Directions[0] = (atanf(Anyvect[1] / Anyvect[0]) + PIGRECO);
-	}
-	Directions[1] = acosf(Anyvect[2] / a);
-	return Directions;
-}
-
-float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
-{
-	float a = 0;
-	for (int i = 0; i < 3; i++)
-		a += (AnyVet1[i] * AnyVet2[i]);
-	return a;
-}
 
 
 
@@ -393,7 +337,7 @@ void SetAccelerazioni(vector<School>& Oceano)
 			for (int i = 0; i < Oceano.size(); i++)
 				for (int k = 0; k < Oceano[i].getSchool().size(); k++)
 					if (a != i || b != k)
-						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < 1000) //da aggiungere campo visivo (così sono pesci cieci, solo sensori)
+						if (dist(Fish->getPos(), Oceano[i].getSchool()[k]->getPos()) < MinDist) //da aggiungere campo visivo (così sono pesci cieci, solo sensori)
 						{
 							PerceivedSchools.push_back(i);
 							k = Oceano[i].getSchool().size();
@@ -412,7 +356,7 @@ void SetAccelerazioni(vector<School>& Oceano)
 					if (a != PerceivedSchools[i] || b != j)
 						if (dist(Fish->getPos(), Oceano[PerceivedSchools[i]].getSchool()[j]->getPos()) < MinDist) //sente solo le repulsioni dei pesci vicini, per risparmiare conti
 						{
-						//RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, forza);
+						RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, forza);
 						for (int u = 0; u < 3; u++)
 							accTot[u] += forza[u] / massa;
 

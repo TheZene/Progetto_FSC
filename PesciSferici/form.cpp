@@ -56,15 +56,15 @@ void stampa(const char* messaggio) {
 void CreateMyWindow(void) {
     int w_est, h_est;
 
-    w_est = 23 + SCREEN_W + 230 + 23;   h_est = 23 + SCREEN_H + 23;
+    w_est = 10 + SCREEN_W + 200 + 10;   h_est = 10 + SCREEN_H + 10;
 
-    form = new Fl_Window(w_est, h_est, "FSC Esempio_1");
-    new Fl_Box(FL_DOWN_FRAME, 20, 20, SCREEN_W + 6, SCREEN_H + 6, "");
-    scene = new Frame(23, 23, SCREEN_W, SCREEN_H, 0);
+    form = new Fl_Window(w_est, h_est, "Pesci");
+    new Fl_Box(FL_DOWN_FRAME, 10, 10, SCREEN_W , SCREEN_H , "");
+    scene = new Frame(10, 10, SCREEN_W, SCREEN_H, 0);
     //scene->tooltip(" OpenGl windows ");
     //scene->MyTip->enter_area(scene, 0,0,SCREEN_WIDTH,SCREEN_HEIGHT, " ecco il centro ");
 
-    ruotaX = new Fl_Value_Slider(w_est - 230, 20 + 0 * 50, 210, 20, "Ruota X");
+    /*ruotaX = new Fl_Value_Slider(w_est - 230, 20 + 0 * 50, 210, 20, "Ruota X");
     ruotaY = new Fl_Value_Slider(w_est - 230, 20 + 1 * 50, 210, 20, "Ruota Y");
     ruotaZ = new Fl_Value_Slider(w_est - 230, 20 + 2 * 50, 210, 20, "Ruota Z");
     zoom = new Fl_Value_Slider(w_est - 230, 20 + 3 * 50, 210, 20, "Zoom");
@@ -86,13 +86,10 @@ void CreateMyWindow(void) {
     button->callback(exit_callback);
     button->tooltip(" Ciao ");
     //ruotaX->tooltip(" Rotazione antioraria con asse x ");
-
+    */
 
     form->end();
     form->show();
-
-
-
     scene->show();
 
 
