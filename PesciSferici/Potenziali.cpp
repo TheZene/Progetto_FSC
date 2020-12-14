@@ -287,7 +287,7 @@ void AttractiveForcesSchool(School Banco, Pesce Fish, float* arr) //calcola la m
 	}
 	
 	//for (int u = 0; u < 3; u++) cout << endl << AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r)[u] << endl;
-	return AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r);
+	return AttractiveForcesSchool(AvgPosSchool, AvgVelSchool, Fish.getPos(), r, arr, 2);
 
 }
 
