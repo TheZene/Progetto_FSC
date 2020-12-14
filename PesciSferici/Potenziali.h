@@ -1,10 +1,4 @@
-#pragma once
-#ifdef PIGRECO
 
-#else
-#define PIGRECO 3.141592f
-
-#endif
 
 
 #ifdef POTENZIALI
@@ -17,11 +11,6 @@
 #include "define.h"
 #endif
 /*
-float dist(float*, float*); //calcolo distanza tra due pesci
-float modul3(float*); //modulo 3 d
-float* FindDir(float*); //trova angoli delle coordinate sferiche
-float ProdottoScalare3(float*, float*);//prodotto scalare 3d
-
 //==========================================
 //Forze e potenziali con posizioni
 //==========================================
@@ -57,8 +46,8 @@ float AttractivePotenzialHole(float*, float*); //potenziale dell'interazione pes
 //==========================================
 
 float RepulsiveForceFishX(Pesce, Pesce);  //idee per fare degli overload con pesce invece di posizioni? potrebbe essere comodo
-//float RepulsiveForceFishX(Pesce *, Pesce *); 
-float RepulsiveForceFishY(Pesce, Pesce); 
+//float RepulsiveForceFishX(Pesce *, Pesce *);
+float RepulsiveForceFishY(Pesce, Pesce);
 //float RepulsiveForceFishY(Pesce*, Pesce*);
 float RepulsiveForceFishZ(Pesce, Pesce);
 //float RepulsiveForceFishZ(Pesce*, Pesce*);
@@ -66,8 +55,8 @@ float RepulsiveForceFishZ(Pesce, Pesce);
 float* RepulsiveForcesFish(Pesce, Pesce);
 //float* RepulsiveForcesFish(Pesce*, Pesce*);
 
-float RepulsivePotenzialFish(Pesce, Pesce); 
-//float RepulsivePotenzialFish(Pesce*, Pesce*); 
+float RepulsivePotenzialFish(Pesce, Pesce);
+//float RepulsivePotenzialFish(Pesce*, Pesce*);
 
 
 float AttractiveForceSchoolX(School, Pesce);  //da finire di overloaddare
@@ -98,6 +87,7 @@ float AllForceFishZ(Pesce, Pesce);
 
 float* AllForcesFish(Pesce, Pesce);
 
-#define POTENZIALI 
+#define POTENZIALI
 #endif
 */
+void SetAccelerazioni(vector<School>& Oceano);

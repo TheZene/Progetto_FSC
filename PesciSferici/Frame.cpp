@@ -7,7 +7,6 @@
 #include <FL/Enumerations.H>
 
 #include "Frame.h"
-#include "Pesce.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -17,13 +16,16 @@
 
 #define LIGHT
 
+extern void initOcean();
 extern void draw_scene();
 extern void stampa(const char* messaggio);
 char* foo;
 int flag = 0;
 
 void Frame::init(void) {
-   
+    moveUp = 0;
+    moveSide = 0;
+    scale = 1;
     gl_font(FL_HELVETICA_BOLD, 16);
     GLUquadricObj* palla;
     palla = gluNewQuadric();
@@ -43,7 +45,7 @@ void Frame::init(void) {
     glNewList(BUCA, GL_COMPILE);
     gluSphere(buca, 0.1, 30, 30);
     glEndList();
-
+    initOcean();
 }
 //-----------------------------------------------------------------------------------------------
 
@@ -78,7 +80,7 @@ void Frame::draw() {
         glLoadIdentity();                                      // Reset The Modelview Matrix
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
         glLoadIdentity();                                      // Reset The View
-        gluLookAt(0.0, 0.0, 120, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
+        gluLookAt(0.0, 0.0, 60, 0, 0, 0, 0, 1, 0);        // Position - View  - Up Vector
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
 
@@ -90,12 +92,12 @@ void Frame::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     draw_scene();
 
-/*    glPushMatrix();
-    glRotated(ruotaZ, 0, 0, 1); 
-    glRotated(ruotaX, 1, 0, 0); 
-    glRotated(ruotaY, 0, 1, 0);
-    glScalef(zoom, zoom, zoom);
-    glPopMatrix();*/
+    /*    glPushMatrix();
+        glRotated(ruotaZ, 0, 0, 1);
+        glRotated(ruotaX, 1, 0, 0);
+        glRotated(ruotaY, 0, 1, 0);
+        glScalef(zoom, zoom, zoom);
+        glPopMatrix();*/
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -103,19 +105,16 @@ int Frame::handle(int event) {
 
     switch (event) {
     case FL_PUSH:
-        //return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
+        return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_RELEASE:
     case FL_DRAG:
         return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
     case FL_MOVE:
-        return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
+        //return handle_mouse(event, Fl::event_button(), Fl::event_x(), Fl::event_y());
+        return 1;
     case FL_FOCUS:
-        label("Gained focus");
-        damage(1);
         return 1;
     case FL_UNFOCUS:
-        label("Lost focus");
-        damage(1);
         return 1;
     default:
         return Fl_Window::handle(event);
@@ -135,63 +134,28 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
         // coordinates where it occurred.
         if (event == FL_PUSH) {
             //inizializzo le posizioni in cui clicko
-            prevx = x;
-            prevy = y;
+
         }
         else if (event == FL_DRAG) {
             //
-            spostamentox = prevx - x;
-            spostamentoy = prevy - y;
-            //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    // Clear The Screen And The Depth Buffer
-            if (!flag) {
-                glPushMatrix();
-                flag = 1;
-            }
-            glRotatef(-spostamentox, 0, 1, 0);
-            glRotatef(-spostamentoy, 1, 0, 0);
-
-            prevx = x;
-            prevy = y;
-            
             /**/
         }
         else if (event == FL_RELEASE) {
-            glPopMatrix();
-            flag = 0;
-            spostamentox = prevx - x;
-            spostamentoy = prevy - y;
-            glRotatef(-spostamentox, 0, 1, 0);
-            glRotatef(-spostamentoy, 1, 0, 0);
+
         }
-        break;
-    case 2: // MMB
+    case 3:
         ret = 1;
         // Based on the action, print the action and
         // coordinates where it occurred.
         if (event == FL_PUSH) {
-            
+            //inizializzo le posizioni in cui clicko
         }
         else if (event == FL_DRAG) {
-            
+
         }
         else if (event == FL_RELEASE) {
-            
+
         }
-        break;
-    case 3: // RMB
-        ret = 1;
-        // Based on the action, print the action and
-        // coordinates where it occurred.
-        if (event == FL_PUSH) {
-            
-        }
-        else if (event == FL_DRAG) {
-            
-        }
-        else if (event == FL_RELEASE) {
-           
-        }
-        break;
     }
     return ret;
 }
@@ -199,28 +163,40 @@ int Frame::handle_mouse(int event, int button, int x, int y) {
 int Frame::handle_key(int event, int key) {
     switch (key) {
     case 's':  //label("letter c was depressed");
-        glRotatef(-4, 1, 0, 0);
-        damage(1);
-        return 1;
-    case 'q':  //label("letter c was depressed");
-        glRotatef(-4, 0, 1, 0);
-        damage(1);
+        moveUp--;
+        glLoadIdentity();
+        gluLookAt(0.0+scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     case 'w':  //label("letter c was depressed");
-        glRotatef(4, 2, 0, 0);
-        damage(1);
-        return 1;
-    case 'e':  //label("letter c was depressed");
-        glRotatef(4, 0, 1, 0);
-        damage(1);
+        moveUp++;
+        glLoadIdentity();
+        gluLookAt(0.0+scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     case 'd':  //label("letter c was depressed");
-        glRotatef(4, 0, 0, 1);
-        damage(1);
+        moveSide++;
+        glLoadIdentity();
+        gluLookAt(0.0 + scale, 0.0 +scale , 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     case 'a':  //label("letter c was depressed");
-        glRotatef(-4, 0, 0, 1);
-        damage(1);
+        moveSide--;
+        glLoadIdentity();
+        gluLookAt(0.0 + scale, 0.0 +scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
+        return 1;
+    case 'x':
+        scale+=0.1;
+        glLoadIdentity();
+        gluLookAt(0.0 +scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
+        return 1;
+    case 'z':
+        scale-=0.1;
+        glLoadIdentity();
+        gluLookAt(0.0+scale, 0.0+scale, 60+scale, 0 + moveSide, 0 + moveUp, 0, 0, 1, 0);
+        glScalef(scale, scale, scale);
         return 1;
     default:  //label("Nothing to do!");
         damage(1);

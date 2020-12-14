@@ -27,7 +27,7 @@ void ruotaY_callback(Fl_Widget*);
 void ruotaZ_callback(Fl_Widget*);
 void zoom_callback(Fl_Widget*);
 
-Fl_Multiline_Output* linee; 
+Fl_Multiline_Output* linee;
 
 //-------------------------------------------------------
 void exit_callback(Fl_Widget*) { form->hide(); }
@@ -56,15 +56,15 @@ void stampa(const char* messaggio) {
 void CreateMyWindow(void) {
     int w_est, h_est;
 
-    w_est = 23 + SCREEN_W + 230 + 23;   h_est = 23 + SCREEN_H + 23;
+    w_est = 10 + SCREEN_W + 200 + 10;   h_est = 10 + SCREEN_H + 10;
 
-    form = new Fl_Window(w_est, h_est, "FSC Esempio_1");
-    new Fl_Box(FL_DOWN_FRAME, 20, 20, SCREEN_W + 6, SCREEN_H + 6, "");
-    scene = new Frame(23, 23, SCREEN_W, SCREEN_H, 0);
+    form = new Fl_Window(w_est, h_est, "Pesci");
+    new Fl_Box(FL_DOWN_FRAME, 10, 10, SCREEN_W , SCREEN_H , "");
+    scene = new Frame(10, 10, SCREEN_W, SCREEN_H, 0);
     //scene->tooltip(" OpenGl windows ");
     //scene->MyTip->enter_area(scene, 0,0,SCREEN_WIDTH,SCREEN_HEIGHT, " ecco il centro ");
-    
-    ruotaX = new Fl_Value_Slider(w_est - 230, 20 + 0 * 50, 210, 20, "Ruota X");
+
+    /*ruotaX = new Fl_Value_Slider(w_est - 230, 20 + 0 * 50, 210, 20, "Ruota X");
     ruotaY = new Fl_Value_Slider(w_est - 230, 20 + 1 * 50, 210, 20, "Ruota Y");
     ruotaZ = new Fl_Value_Slider(w_est - 230, 20 + 2 * 50, 210, 20, "Ruota Z");
     zoom = new Fl_Value_Slider(w_est - 230, 20 + 3 * 50, 210, 20, "Zoom");
@@ -74,29 +74,26 @@ void CreateMyWindow(void) {
     ruotaX->type(FL_HOR_NICE_SLIDER); ruotaX->bounds(-1, 1); ruotaX->value(scene->ruotaX = 0);
     ruotaY->type(FL_HOR_NICE_SLIDER); ruotaY->bounds(-1, 1); ruotaY->value(scene->ruotaY = 0);
     ruotaZ->type(FL_HOR_NICE_SLIDER); ruotaZ->bounds(-1, 1); ruotaZ->value(scene->ruotaZ = 0);
-  
+
     zoom->type(FL_HOR_NICE_SLIDER); zoom->bounds(0.1, 10); zoom->value(scene->zoom = 1.0);
     ruotaX->callback(ruotaX_callback);
     ruotaY->callback(ruotaY_callback);
     ruotaZ->callback(ruotaZ_callback);
-    
+
     zoom->callback(zoom_callback);
 
 
     button->callback(exit_callback);
     button->tooltip(" Ciao ");
     //ruotaX->tooltip(" Rotazione antioraria con asse x ");
-
+    */
 
     form->end();
     form->show();
-    
-
-    
     scene->show();
 
-    
- }
+
+}
 //-------------------------------------------------------------------------------------------------
 
 
