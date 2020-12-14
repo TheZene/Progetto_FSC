@@ -62,16 +62,46 @@ void initOcean() {
     }
 }
 
+void initOcean2() {
+    bool too_close=false;
+    for (int i = 0; i < FISHNUMBER; i++) {
+        pos[i][0] = ((rand() % 4000 + 1)-2000)/100;
+        pos[i][1] = ((rand() % 4000 + 1) - 2000) / 100;
+        pos[i][2] = 0;
+        for (int g = 0; g < i; g++)
+        {
+            while (dist(pos[g], pos[i]) <3)
+            {
+                pos[i][0] = ((rand() % 4000 + 1) - 2000) / 100;
+                pos[i][1] = ((rand() % 4000 + 1) - 2000) / 100;
+            }
+        }
+
+        srand(time(NULL));
+        vel[i][0] = rand() % 2 + 1;
+        vel[i][1] = rand() % 2 + 1;
+        vel[i][2] = 0;
+        p[i] = Pesce(pos[i], vel[i]);
+    }
+
+    for (int i = 0; i < SCHOOLNUMBER; i++) {
+        s[i] = School(&p[i]);
+        pozza.push_back(s[i]);
+    }
+}
+
+
 
 void draw_scene(void) {
     DrawOcean(pozza);
+
 
     // ********************************************************************************************************
     /*void draw_scene(void) {
 
         draw_pesce();
     */
-    glColor3f(0.1, 1.0, 0.1);		// redish
+    //glColor3f(0.1, 1.0, 0.1);		// redish
     //glFrontFace(GL_CW); 
     //glutSolidTeapot(0.5);			// draw the teapot
     //glutSolidTorus(1,2,30,30);			            // draw the torus

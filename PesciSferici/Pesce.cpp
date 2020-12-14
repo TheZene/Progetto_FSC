@@ -55,9 +55,11 @@ void Pesce::Nuota() {
     //incremento della posizione e della velocità del pesce
     for (int k = 0; k < DIMARR; ++k)
     {
-        if (v > 5) acc[k] += -pow(vel[k], 3) / (abs(vel[k]) + 0.0000001); //attrito viscoso
+        
         pos[k] += vel[k] * dt;
         vel[k] += acc[k] * dt;
+        acc[k] += -dt*pow(vel[k], 3) / (abs(vel[k]) + 0.0000001); //attrito viscoso
+       // else  acc[k] += -vel[k] * dt;
     }
 
     //movimenti e grafica delle buche
