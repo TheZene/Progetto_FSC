@@ -12,6 +12,7 @@
 #include "School.h"
 
 
+
 void Merge(vector<School>& Oceano);
 float dist(float* pos1, float* pos2);
 float modul3(float* Anyvect);

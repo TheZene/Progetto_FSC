@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "form.h"
-#include "frame.h"
+#include "Frame.h"
 
 
 using namespace std;
