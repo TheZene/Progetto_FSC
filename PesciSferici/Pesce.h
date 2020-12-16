@@ -56,4 +56,5 @@ public:
 	void NuotainCerchio(float& t, int i);
 	float computeTheta();
 	void computePolarization();
+	void computePolJack();
 };

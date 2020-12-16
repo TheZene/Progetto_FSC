@@ -340,6 +340,18 @@ void omegaPunto(Pesce PesceDavanti, Pesce PesceDietro, float* arr)
 	for (int i = 0; i < 3; i++) arr[i] = arr[i] * temporaneo;
 }
 
+void omegaPuntoJack(Pesce Davanti, Pesce Dietro, float* arr)
+{
+	ProdottoVettoriale(Dietro.getVel(), Davanti.getVel(), arr);
+	float temporaneo = 0;
+	temporaneo = AttractivePotenzialHole(Dietro.getPos(), Davanti.getHoles()[0].getPos()) +
+		AttractivePotenzialHole(Dietro.getPos(), Davanti.getHoles()[1].getPos()) +
+		AttractivePotenzialHole(Dietro.getPos(), Davanti.getHoles()[4].getPos()) +
+		AttractivePotenzialHole(Dietro.getPos(), Davanti.getHoles()[5].getPos());
+	for (int i = 0; i < 3; i++) arr[i] = arr[i] * temporaneo;
+}
+
+
 int Weight(vector<School>& Oceano)
 {
 	int peso = 0;
@@ -358,7 +370,7 @@ void SetAccelerazioni(vector<School>& Oceano)
 		{
 			Pesce* Fish = Oceano[a].getSchool()[b];
 			float accTot[3] = { 0.f, 0.f, 0.f };
-			float forza[3], OmegaPunto[3];
+			float forza[3], OmegaPunto[3]{ 0,0,0 }, OmegaPuntoVero[3]{ 0,0,0 };
 			vector<int> PerceivedSchools;
 			//trova i banchi visti dal pesce
 			for (int i = 0; i < Oceano.size(); i++)
@@ -382,29 +394,33 @@ void SetAccelerazioni(vector<School>& Oceano)
 				//consideriamo i potenziali repulsivi dei pesci vicini del banco corrente
 				for (int j = 0; j < Oceano[PerceivedSchools[i]].getSchool().size(); j++)
 					if (a != PerceivedSchools[i] || b != j)
+					
+				
 						if (dist(Fish->getPos(), Oceano[PerceivedSchools[i]].getSchool()[j]->getPos()) < MinDist) //sente solo le repulsioni dei pesci vicini, per risparmiare conti
 						{
-						RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, forza);
-						omegaPunto(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, OmegaPunto);
-						for (int u = 0; u < 3; u++)
-							accTot[u] += forza[u] / massa;
-
-
+							/*	omegaPuntoJack(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, OmegaPunto);
+					for (int u=0; u<3; u++)
+					OmegaPuntoVero[u] += OmegaPunto[u];*/
+							RepulsiveForcesFish(*Oceano[PerceivedSchools[i]].getSchool()[j], *Fish, forza);
+							for (int u = 0; u < 3; u++)
+							{
+								accTot[u] += forza[u] / massa;
+							}
 							//potenziali buche
 							for (int h = 0; h < 8; h++)
 							{
 								float* PosHole = Oceano[PerceivedSchools[i]].getSchool()[j]->getHoles()[h].getPos();
 
 								AttractiveForcesHole(Fish->getPos(), PosHole, forza);
-								for (int u = 0; u < 3; u++) 
+								for (int u = 0; u < 3; u++)
 									accTot[u] += forza[u] / massa;
-								
+
 							}
 						}
-
+					
 			}
 
 			Fish->setAcc(accTot);
-			Fish->setOmegaPunto(OmegaPunto);
+			Fish->setOmegaPunto(OmegaPuntoVero);
 		}
 }

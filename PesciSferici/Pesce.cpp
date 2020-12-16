@@ -2,7 +2,7 @@
 #include <iostream>
 extern float modul3(float*);
 //extern float omegaPunto(Pesce, Pesce, float*);
-
+extern void Rotazione(float*, float*);
 
 
 Pesce::Pesce() {
@@ -64,7 +64,7 @@ void Pesce::Nuota() {
     for (int k = 0; k < DIMARR; ++k)
     {
         
-
+        omega[k] += omegapunto[k] * dt;
         pos[k] += vel[k] * dt;
         vel[k] += acc[k] * dt;
         acc[k] += -dt*pow(vel[k], 3) / (abs(vel[k]) + 0.0000001); //attrito viscoso
@@ -82,7 +82,9 @@ void Pesce::Nuota() {
         glPopMatrix();
     }
 
-    computePolarization();
+    //Rotazione(vel, omega);
+    //computePolJack(); 
+    //computePolarization(); //c'è un qualche problemino, non trovo il dove
 }
 
 void Pesce::NuotainCerchio(float& t, int i) {
@@ -120,7 +122,7 @@ void Pesce::computePolarization()
     {
         for (int colonna = 0; colonna < 3; colonna++)
         {
-            vel[riga] = prevel[colonna] * (omeganorm[riga] * omeganorm[colonna] * (1 - cosf(spostheta)));
+            vel[riga] += prevel[colonna] * (omeganorm[riga] * omeganorm[colonna] * (1 - cosf(spostheta)));
             if (colonna == riga)
             {
                 vel[riga] += prevel[colonna] * cosf(spostheta);
@@ -140,4 +142,11 @@ void Pesce::computePolarization()
 
         }
     }
+}
+
+void Pesce::computePolJack()
+{
+    for (int i = 0; i < 3; i++)
+        omega[i] += omegapunto[i]*dt;
+    Rotazione(vel, omega);
 }
