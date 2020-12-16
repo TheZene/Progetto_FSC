@@ -17,6 +17,7 @@
 #define LIGHT
 
 extern void initOcean();
+extern void initOcean2();
 extern void draw_scene();
 extern void stampa(const char* messaggio);
 char* foo;
@@ -45,7 +46,7 @@ void Frame::init(void) {
     glNewList(BUCA, GL_COMPILE);
     gluSphere(buca, 0.1, 30, 30);
     glEndList();
-    initOcean();
+    initOcean2();
 }
 //-----------------------------------------------------------------------------------------------
 

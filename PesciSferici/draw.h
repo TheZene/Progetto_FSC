@@ -8,11 +8,13 @@
 #include "define.h"
 
 void initOcean();
+void initOcean2();
 void normale9f(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
 void draw_scene(void);
 void draw_pesce2(void);
 
 //prova per le buche. Per avere moto circolare su piano xy: vy=10, su piano xz vz=10
+
 /*float posizione[3] = { 10,10,0 };
 float vel[3] = {0, 0, 10 };
 float accelerazione[3] = { 0, 0, 0};
@@ -30,6 +32,7 @@ Pesce pesciolini[2] = { fermo, collidente };
 float t = 0;*/
 
 
+
 float pos[FISHNUMBER][3];
 float vel[FISHNUMBER][3];
 Pesce p[FISHNUMBER];
@@ -42,6 +45,7 @@ float posizione1[3] = { 0, 10, .0 };
 float vel1[3] = { 0, -0.7, 0. };
 float posizione2[3] = {0, -10, 0 };
 float vel2[3] = { 0., 0.7, 0. };
+
 
 float posizione3[3] = { +3, -3, -0. };
 float vel3[3] = { -0.3, 0.2, 0. };
@@ -91,7 +95,9 @@ School set(&sette);
 School ot(&otto);
 School nov(&nove);
 School die(&dieci);
-vector<School> pozza = { un, du, tr, qu, cinq, se, set, ot, nov, die };*/
+vector<School> pozza = { un, du, tr, qu, cinq, se, set, ot, nov, die};
+float t = 0;
+
 
 /*void draw_palla(void);
 void draw_tetra(void);*/
