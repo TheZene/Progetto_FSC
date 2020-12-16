@@ -12,9 +12,8 @@ float dist(float* pos1, float* pos2) //calcolo della distanza tra due punti FUNZ
 float modul3(float* Anyvect)//calcola il modulo
 {
 	float a = 0;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
 		a += (Anyvect[i] * Anyvect[i]);
-	}
 	a = sqrtf(a);
 	return a;
 }
@@ -56,6 +55,49 @@ float ProdottoScalare3(float* AnyVet1, float* AnyVet2)
 	return a;
 }
 
+void ProdottoVettoriale(float* v, float* w, float* result)
+{
+	result[0] = v[1] * w[2] - v[2] * w[1];
+	result[1] = v[2] * w[0] - v[0] * w[2];
+	result[2] = v[0] * w[1] - v[1] * w[0];
+}
+
+void ProdottoVettoriale(float* v, float* w)
+{
+	float result[3];
+	result[0] = v[1] * w[2] - v[2] * w[1];
+	result[1] = v[2] * w[0] - v[0] * w[2];
+	result[2] = v[0] * w[1] - v[1] * w[0];
+	for (int y = 0; y < 3; y++) v[y] = result[y];
+}
+
+void Rotazione(float* v, float* omega)
+{
+	float result[3];
+	//costruiamo la matrice di rotazione
+	float R[3][3];
+	int sgn = -1;
+	float theta = modul3(omega);
+	float u[3];
+	for (int y = 0; y < 3; y++) u[y] = omega[y]/theta;
+	theta *= dt;
+	for (int i = 0; i < 3; i++) //riga i-esima
+		for (int j = 0; j < 3; j++) //colonna j-esima
+		{
+			if (i == j)
+				R[i][j] = cos(theta) + u[j] * u[j] * (1 - cos(theta));
+			else
+			{
+				R[i][j] = u[i] * u[j] * (1 - cos(theta)) + sgn * u[3 - i - j] * sin(theta);
+				if (j!=2) sgn *= -1;
+			}
+		}
+	//matrice costruita ora ruotiamo il vettore
+	for (int i = 0; i < 3; i++)
+		result[i] = ProdottoScalare3(R[i], v);
+	for (int i = 0; i < 3; i++)
+		v[i] = result[i];
+}
 
 
 /*void mySplit(vector<School>& Oceano) {

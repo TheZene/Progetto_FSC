@@ -71,6 +71,3 @@ vector<School> School::split()
 
 
 
-
-
-
